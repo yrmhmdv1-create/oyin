@@ -1,0 +1,3088 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZukkoArena — Intellektual O‘yinlar va Aql Charxlash Platformasi</title>
+    
+    <!-- Google Fonts: Nunito & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons & Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-card: rgba(30, 41, 59, 0.85);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.1);
+            
+            /* Yosh toifalari ranglari */
+            --age-6-9: #ff6b6b;
+            --age-6-9-grad: linear-gradient(135deg, #ff9a44 0%, #fc6076 100%);
+            
+            --age-9-14: #00d2d3;
+            --age-9-14-grad: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            
+            --age-14-19: #a55eea;
+            --age-14-19-grad: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+            
+            --age-19-plus: #feca57;
+            --age-19-plus-grad: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+
+            --primary-accent: #6366f1;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, .brand-font {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+        }
+
+        /* Glassmorphism Navbar */
+        .navbar-custom {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 0.85rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+
+        .navbar-brand {
+            font-size: 1.65rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-weight: 600;
+            padding: 0.5rem 1rem !important;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Player Badge & Sound Button */
+        .player-pill {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid var(--border-glass);
+            border-radius: 50px;
+            padding: 6px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .rank-badge {
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .rank-Beginner { background: #334155; color: #e2e8f0; }
+        .rank-Advanced { background: #0284c7; color: #fff; }
+        .rank-Expert { background: #7c3aed; color: #fff; }
+        .rank-Master { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; }
+
+        .btn-sound {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+
+        .btn-sound:hover {
+            background: rgba(99, 102, 241, 0.3);
+            transform: scale(1.08);
+        }
+
+        .btn-sound.muted {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 4rem 0 3rem;
+            position: relative;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-title {
+            font-size: clamp(2.1rem, 4.5vw, 3.4rem);
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #a855f7 50%, #fb7185 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-glow {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.7);
+            color: #fff;
+        }
+
+        /* Floating Brain Visual */
+        .brain-float {
+            animation: floatAnim 4s ease-in-out infinite;
+            font-size: 7rem;
+            filter: drop-shadow(0 20px 30px rgba(99, 102, 241, 0.4));
+        }
+
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(4deg); }
+        }
+
+        /* Age Category Cards */
+        .age-card {
+            border-radius: 24px;
+            padding: 1.8rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .age-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .age-6-9 { background: var(--age-6-9-grad); }
+        .age-9-14 { background: var(--age-9-14-grad); }
+        .age-14-19 { background: var(--age-14-19-grad); }
+        .age-19-plus { background: var(--age-19-plus-grad); color: #1e293b; }
+
+        .age-card-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.22);
+            width: 68px;
+            height: 68px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+
+        /* Game Cards */
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 22px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(129, 140, 248, 0.5);
+            box-shadow: 0 18px 30px -10px rgba(0, 0, 0, 0.45);
+        }
+
+        .game-icon-box {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .mechanic-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            display: inline-block;
+        }
+
+        /* Filter Pills */
+        .filter-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            transition: all 0.25s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary-accent);
+            color: #fff;
+            border-color: var(--primary-accent);
+            transform: translateY(-2px);
+        }
+
+        /* Daily Challenge Card */
+        .daily-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+            border: 1px solid rgba(167, 139, 250, 0.35);
+            border-radius: 24px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Leaderboard */
+        .leaderboard-table {
+            background: var(--bg-card);
+            border-radius: 22px;
+            border: 1px solid var(--border-glass);
+            overflow: hidden;
+        }
+
+        .leaderboard-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.2s;
+        }
+
+        .leaderboard-row:last-child { border-bottom: none; }
+        .leaderboard-row:hover { background: rgba(255, 255, 255, 0.04); }
+        .leaderboard-row.current-user {
+            background: rgba(99, 102, 241, 0.18);
+            border-left: 4px solid #6366f1;
+        }
+
+        /* ACTIVE GAME ARENA */
+        #game-arena-view {
+            min-height: calc(100vh - 80px);
+            padding: 1.5rem 0 3rem;
+        }
+
+        .arena-container {
+            max-width: 880px;
+            margin: 0 auto;
+            background: rgba(30, 41, 59, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px;
+            padding: 1.8rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        }
+
+        .arena-hud {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border-glass);
+            margin-bottom: 1.5rem;
+        }
+
+        .hud-stat {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 8px 16px;
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+        }
+
+        .timer-wrapper {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .timer-bar-bg {
+            height: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+        }
+
+        .timer-bar-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            border-radius: 10px;
+            transition: width 0.25s linear, background-color 0.3s ease;
+        }
+
+        .timer-bar-fill.warning { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .timer-bar-fill.danger { background: linear-gradient(90deg, #ef4444, #dc2626); }
+
+        /* Game Interactive Elements */
+        .question-stage {
+            animation: slideUpFade 0.35s ease-out;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .option-btn {
+            background: rgba(15, 23, 42, 0.75);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-radius: 18px;
+            padding: 1.1rem 1.3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: rgba(99, 102, 241, 0.22);
+            border-color: #818cf8;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct-anim {
+            background: rgba(16, 185, 129, 0.25) !important;
+            border-color: #10b981 !important;
+            color: #6ee7b7 !important;
+            animation: pulseSuccess 0.5s ease;
+        }
+
+        .option-btn.wrong-anim {
+            background: rgba(239, 68, 68, 0.25) !important;
+            border-color: #ef4444 !important;
+            color: #fca5a5 !important;
+            animation: shakeWrong 0.45s ease;
+        }
+
+        /* Kid mode giant buttons (6-9 yosh) */
+        .kid-mode .option-btn {
+            padding: 1.4rem;
+            font-size: 1.35rem;
+            border-radius: 22px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        @keyframes pulseSuccess {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shakeWrong {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        /* Memory Cards Grid */
+        .memory-grid {
+            display: grid;
+            gap: 12px;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .mem-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #334155, #1e293b);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            user-select: none;
+        }
+
+        .mem-card.flipped, .mem-card.matched {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-color: #a5b4fc;
+            transform: rotateY(180deg);
+        }
+
+        .mem-card.matched {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-color: #6ee7b7;
+        }
+
+        /* Odd One Out / Schulte Grid */
+        .spot-grid {
+            display: grid;
+            gap: 10px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .spot-cell {
+            aspect-ratio: 1;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .spot-cell:hover {
+            transform: scale(1.06);
+            border-color: #818cf8;
+        }
+
+        .spot-cell.found {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: #10b981;
+            color: #6ee7b7;
+        }
+
+        /* Drag & Drop / Shape Match */
+        .drag-item {
+            padding: 14px 22px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            border-radius: 16px;
+            font-size: 2rem;
+            cursor: grab;
+            user-select: none;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            transition: transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drag-item.selected-tap {
+            outline: 4px solid #fbbf24;
+            transform: scale(1.08);
+        }
+
+        .drop-zone {
+            min-height: 95px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        .drop-zone.matched-zone {
+            border-style: solid;
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        /* Feedback Banner */
+        .feedback-box {
+            border-radius: 16px;
+            padding: 1rem 1.25rem;
+            margin-top: 1.25rem;
+            font-weight: 700;
+            display: none;
+            animation: slideUpFade 0.25s ease;
+        }
+
+        .feedback-box.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid #10b981;
+            color: #6ee7b7;
+        }
+
+        .feedback-box.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid #ef4444;
+            color: #fca5a5;
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Achievement Pill */
+        .achievement-badge {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.3));
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            border-radius: 14px;
+            padding: 10px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #fde68a;
+            font-weight: 700;
+            margin: 4px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid var(--border-glass);
+            padding: 2.5rem 0 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .hero-card { padding: 2rem 1.4rem; }
+            .arena-container { padding: 1.2rem; border-radius: 20px; }
+            .brain-float { font-size: 4.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="App.navigate('home'); return false;">
+                <i class="fa-solid fa-brain"></i> ZukkoArena
+            </a>
+            
+            <div class="d-flex align-items-center gap-2 order-lg-3">
+                <div class="player-pill d-none d-sm-flex" title="Sizning umumiy ballingiz va darajangiz">
+                    <i class="fa-solid fa-star text-warning"></i>
+                    <span id="nav-total-xp">0</span> XP
+                    <span id="nav-rank-badge" class="rank-badge rank-Beginner">Beginner</span>
+                </div>
+                <button id="sound-toggle-btn" class="btn-sound" onclick="SoundEngine.toggleMute()" title="Ovozni yoqish/o‘chirish">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+                <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                    <i class="fa-solid fa-bars fs-4"></i>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse order-lg-2" id="mainNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="nav-home" href="#" onclick="App.navigate('home'); return false;">
+                            <i class="bi bi-house-door me-1"></i> Bosh sahifa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-games" href="#" onclick="App.navigate('games'); return false;">
+                            <i class="bi bi-controller me-1"></i> O‘yinlar (20)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-leaderboard" href="#" onclick="App.navigate('leaderboard'); return false;">
+                            <i class="bi bi-trophy me-1"></i> Reyting
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="nav-about" href="#" onclick="App.navigate('about'); return false;">
+                            <i class="bi bi-info-circle me-1"></i> Biz haqimizda
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA (HOME / CATALOG / LEADERBOARD / ABOUT) -->
+    <main id="main-portal-view">
+        
+        <!-- HERO SECTION -->
+        <section id="section-hero" class="hero-section">
+            <div class="container">
+                <div class="hero-card">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-8">
+                            <span class="badge bg-primary bg-opacity-25 text-info border border-info border-opacity-25 px-3 py-2 rounded-pill mb-3 fw-bold">
+                                <i class="fa-solid fa-bolt me-1"></i> 6 yoshdan 99 yoshgacha bo‘lgan aqllar uchun!
+                            </span>
+                            <h1 class="hero-title">
+                                Aqlingizni charxlang va <span class="gradient-text">Intellektual Chempion</span> bo‘ling!
+                            </h1>
+                            <p class="lead text-secondary mb-4" style="max-width: 620px;">
+                                Mantiq, xotira, diqqat va tezkor fikrlashni rivojlantiruvchi 20 ta interaktiv o‘yin. Har bir yosh toifasi uchun maxsus topshiriqlar, jonli ovoz effektlari va reyting tizimi!
+                            </p>
+                            <div class="d-flex flex-wrap gap-3">
+                                <button class="btn btn-glow" onclick="App.scrollToCategories()">
+                                    <i class="fa-solid fa-play me-2"></i> O‘yinni Boshlash
+                                </button>
+                                <button class="btn btn-outline-light px-4 py-3 rounded-4 fw-bold" onclick="App.startDailyChallenge()">
+                                    <i class="fa-solid fa-fire text-warning me-2"></i> Kunlik Challenge
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <div class="brain-float">🧠</div>
+                            <div class="d-flex justify-content-center gap-3 mt-2">
+                                <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                                    <div class="fw-black fs-5 text-info">20+</div>
+                                    <small class="text-secondary">O‘yinlar</small>
+                                </div>
+                                <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                                    <div class="fw-black fs-5 text-warning">4</div>
+                                    <small class="text-secondary">Yosh toifasi</small>
+                                </div>
+                                <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                                    <div class="fw-black fs-5 text-success">100%</div>
+                                    <small class="text-secondary">Interaktiv</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AGE CATEGORIES SECTION -->
+        <section id="section-categories" class="py-4">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+                    <div>
+                        <h2 class="mb-1"><i class="fa-solid fa-layer-group text-primary me-2"></i>Yosh Toifasini Tanlang</h2>
+                        <p class="text-secondary mb-0">O‘z yoshingizga mos keladigan intellektual maydonni tanlang</p>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- 6-9 yosh -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="age-card age-6-9" onclick="App.selectAgeCategory('6-9')">
+                            <div>
+                                <div class="age-card-icon">🦁</div>
+                                <span class="badge bg-dark bg-opacity-25 mb-2">6–9 YOSH</span>
+                                <h3 class="h4 mb-2">Kichik Daholar</h3>
+                                <p class="small opacity-90 mb-3">Ranglar, quvnoq hayvonlar, shakllar mosligi, xotira kartochkalari va oddiy arifmetika.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-white border-opacity-25">
+                                <span class="fw-bold small">5 ta o‘yin</span>
+                                <span class="btn btn-sm btn-light rounded-pill fw-bold px-3">Kirish <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 9-14 yosh -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="age-card age-9-14" onclick="App.selectAgeCategory('9-14')">
+                            <div>
+                                <div class="age-card-icon">🚀</div>
+                                <span class="badge bg-dark bg-opacity-25 mb-2">9–14 YOSH</span>
+                                <h3 class="h4 mb-2">Yosh Tadqiqotchilar</h3>
+                                <p class="small opacity-90 mb-3">Raqamlar zanjiri, so‘z topish, Schulte diqqat jadvali, mantiqiy labirint va tezkor hisob.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-white border-opacity-25">
+                                <span class="fw-bold small">5 ta o‘yin</span>
+                                <span class="btn btn-sm btn-light rounded-pill fw-bold px-3">Kirish <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 14-19 yosh -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="age-card age-14-19" onclick="App.selectAgeCategory('14-19')">
+                            <div>
+                                <div class="age-card-icon">⚡</div>
+                                <span class="badge bg-dark bg-opacity-25 mb-2">14–19 YOSH</span>
+                                <h3 class="h4 mb-2">Intellektual Liga</h3>
+                                <p class="small opacity-90 mb-3">Shifrlarni yechish, IQ matritsalar, strategik o‘yinlar, algebraik duel va vaziyat tahlili.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-white border-opacity-25">
+                                <span class="fw-bold small">5 ta o‘yin</span>
+                                <span class="btn btn-sm btn-light rounded-pill fw-bold px-3">Kirish <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 19+ yosh -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="age-card age-19-plus" onclick="App.selectAgeCategory('19+')">
+                            <div>
+                                <div class="age-card-icon" style="background: rgba(0,0,0,0.12);">👑</div>
+                                <span class="badge bg-dark text-warning mb-2">19+ YOSH</span>
+                                <h3 class="h4 mb-2">Grossmeysterlar</h3>
+                                <p class="small opacity-90 mb-3">Deduktiv detektiv, strategik qarorlar, maksimal xotira, kognitiv moslashuv va paradokslar.</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center pt-2 border-top border-dark border-opacity-25">
+                                <span class="fw-bold small">5 ta o‘yin</span>
+                                <span class="btn btn-sm btn-dark rounded-pill fw-bold px-3">Kirish <i class="bi bi-arrow-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAMES CATALOG SECTION -->
+        <section id="section-games" class="py-5">
+            <div class="container">
+                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                    <div>
+                        <h2 class="mb-1"><i class="fa-solid fa-gamepad text-info me-2"></i>Intellektual O‘yinlar To‘plami</h2>
+                        <p class="text-secondary mb-0">Har bir o‘yin o‘ziga xos mexanika va taymerga ega</p>
+                    </div>
+                    <!-- Age Filter Buttons -->
+                    <div class="d-flex flex-wrap gap-2" id="category-filters">
+                        <button class="filter-btn active" data-filter="all" onclick="App.filterGames('all', this)">Barchasi (20)</button>
+                        <button class="filter-btn" data-filter="6-9" onclick="App.filterGames('6-9', this)">🦁 6–9 yosh</button>
+                        <button class="filter-btn" data-filter="9-14" onclick="App.filterGames('9-14', this)">🚀 9–14 yosh</button>
+                        <button class="filter-btn" data-filter="14-19" onclick="App.filterGames('14-19', this)">⚡ 14–19 yosh</button>
+                        <button class="filter-btn" data-filter="19+" onclick="App.filterGames('19+', this)">👑 19+ yosh</button>
+                    </div>
+                </div>
+
+                <!-- Games Grid Container -->
+                <div class="row g-4" id="games-grid-container">
+                    <!-- JS orqali 20 ta o'yin kartochkalari yuklanadi -->
+                </div>
+            </div>
+        </section>
+
+        <!-- DAILY CHALLENGE & LEADERBOARD SECTION -->
+        <section id="section-leaderboard" class="py-4 pb-5">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Daily Challenge & Player Profile -->
+                    <div class="col-lg-5">
+                        <div class="daily-card mb-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="badge bg-warning text-dark fw-bold px-3 py-2 rounded-pill">
+                                    <i class="fa-solid fa-fire me-1"></i> KUNLIK CHALLENGE
+                                </span>
+                                <span class="text-warning fw-bold">+250 Bonus XP</span>
+                            </div>
+                            <h3 class="h4 text-white mb-2" id="daily-game-title">Kunning Maxsus Sinovi</h3>
+                            <p class="text-light opacity-75 small mb-4" id="daily-game-desc">
+                                Bugungi tanlangan intellektual o‘yinni muvaffaqiyatli yakunlang va qo‘shimcha reyting ballariga ega bo‘ling!
+                            </p>
+                            <button class="btn btn-warning text-dark fw-extrabold w-100 py-3 rounded-4" id="daily-challenge-btn" onclick="App.startDailyChallenge()">
+                                <i class="fa-solid fa-bolt me-2"></i> Kunlik Sinovni Boshlash
+                            </button>
+                        </div>
+
+                        <!-- Player Achievements & Name Edit -->
+                        <div class="game-card">
+                            <h4 class="h5 mb-3"><i class="fa-solid fa-medal text-warning me-2"></i>Sizning Profilingiz va Yutuqlar</h4>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text bg-dark border-secondary text-secondary"><i class="bi bi-person-fill"></i></span>
+                                <input type="text" id="player-name-input" class="form-control bg-dark text-white border-secondary" placeholder="Ismingizni kiriting..." maxlength="18">
+                                <button class="btn btn-primary fw-bold" onclick="App.savePlayerName()">Saqlash</button>
+                            </div>
+                            <div class="d-flex justify-content-between small text-secondary mb-2">
+                                <span>O‘ynalgan o‘yinlar: <strong class="text-white" id="stat-games-played">0</strong></span>
+                                <span>Daraja: <strong class="text-info" id="stat-player-level">Beginner</strong></span>
+                            </div>
+                            <div id="achievements-list" class="mt-2">
+                                <span class="text-secondary small">Hali yutuqlar ochilmagan. O‘yin o‘ynab yutuqlarni qo‘lga kiriting!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <div class="col-lg-7">
+                        <div class="leaderboard-table h-100">
+                            <div class="p-4 border-bottom border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h3 class="h4 mb-1"><i class="fa-solid fa-trophy text-warning me-2"></i>Eng Yuqori Natijalar Reytingi</h3>
+                                    <p class="text-secondary small mb-0">Platformaning eng zukko ishtirokchilari</p>
+                                </div>
+                                <span class="badge bg-primary bg-opacity-25 text-info px-3 py-2 rounded-pill">Top 8</span>
+                            </div>
+                            <div id="leaderboard-list">
+                                <!-- JS orqali to'ldiriladi -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="section-about" class="py-4 pb-5">
+            <div class="container">
+                <div class="hero-card p-4 p-md-5">
+                    <div class="row align-items-center g-4">
+                        <div class="col-lg-7">
+                            <h2 class="mb-3">ZukkoArena Platformasi Haqida</h2>
+                            <p class="text-secondary">
+                                <strong>ZukkoArena</strong> — bu oddiy testlar to‘plami emas, balki inson miyasining asosiy kognitiv funksiyalarini (mantiqiy tahlil, vizual xotira, diqqatni jamlash, tezkor qaror qabul qilish va strategik fikrlash) rivojlantirishga qaratilgan zamonaviy o‘yin ekotizimi.
+                            </p>
+                            <div class="row g-3 mt-2">
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                        <span>20 xil noyob o‘yin mexanikasi</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                        <span>Dinamik ovoz effektlari</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                        <span>Yoshga moslashtirilgan murakkablik</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-check-circle-fill text-success fs-5"></i>
+                                        <span>Tezkorlik bonusi va Combo tizimi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 text-center">
+                            <div class="p-4 rounded-4 bg-dark bg-opacity-50 border border-secondary border-opacity-25">
+                                <h5 class="text-warning mb-3">O‘yinchi Darajalari</h5>
+                                <div class="d-flex flex-column gap-2 text-start small">
+                                    <div class="d-flex justify-content-between"><span class="rank-badge rank-Beginner">Beginner</span> <span>0 – 999 XP</span></div>
+                                    <div class="d-flex justify-content-between"><span class="rank-badge rank-Advanced">Advanced</span> <span>1,000 – 2,999 XP</span></div>
+                                    <div class="d-flex justify-content-between"><span class="rank-badge rank-Expert">Expert</span> <span>3,000 – 5,999 XP</span></div>
+                                    <div class="d-flex justify-content-between"><span class="rank-badge rank-Master">Master</span> <span>6,000+ XP</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ACTIVE GAME ARENA VIEW (HIDDEN BY DEFAULT) -->
+    <section id="game-arena-view" class="d-none">
+        <div class="container">
+            <div class="arena-container" id="arena-box">
+                
+                <!-- Top HUD -->
+                <div class="arena-hud">
+                    <button class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold text-white" onclick="GameEngine.exitToMenu()">
+                        <i class="bi bi-arrow-left me-1"></i> Chiqish
+                    </button>
+                    
+                    <div class="d-flex flex-wrap align-items-center gap-2">
+                        <div class="hud-stat text-info">
+                            <i class="bi bi-list-ol"></i>
+                            <span id="hud-progress">1 / 6</span>
+                        </div>
+                        <div class="hud-stat text-warning">
+                            <i class="fa-solid fa-fire"></i>
+                            <span id="hud-combo">x1</span>
+                        </div>
+                        <div class="hud-stat text-success">
+                            <i class="fa-solid fa-star"></i>
+                            <span id="hud-score">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer Bar -->
+                <div class="timer-wrapper" id="arena-timer-section">
+                    <div class="d-flex justify-content-between align-items-center mb-1 small fw-bold">
+                        <span class="text-secondary" id="arena-game-title-label">O‘yin nomi</span>
+                        <span id="hud-timer-text" class="text-info fs-6"><i class="bi bi-stopwatch me-1"></i>25s</span>
+                    </div>
+                    <div class="timer-bar-bg">
+                        <div class="timer-bar-fill" id="hud-timer-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Dynamic Stage Area -->
+                <div id="arena-stage">
+                    <!-- O'yin savollari va interaktiv maydon shu yerga yuklanadi -->
+                </div>
+
+                <!-- Immediate Answer Feedback Banner -->
+                <div id="arena-feedback" class="feedback-box"></div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRE-GAME RULES MODAL -->
+    <div class="modal fade" id="rulesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border border-secondary border-opacity-50 rounded-4 shadow-lg">
+                <div class="modal-header border-secondary border-opacity-25">
+                    <div class="d-flex align-items-center gap-2">
+                        <span id="modal-game-icon" class="fs-3">🧠</span>
+                        <div>
+                            <h5 class="modal-title mb-0" id="modal-game-title">O‘yin nomi</h5>
+                            <small class="text-info fw-bold" id="modal-game-age">Yosh toifasi</small>
+                        </div>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <span class="badge bg-primary bg-opacity-25 text-info me-2" id="modal-game-mechanic">Mexanika</span>
+                        <span class="badge bg-warning bg-opacity-25 text-warning" id="modal-game-time"><i class="bi bi-clock me-1"></i>25 soniya / bosqich</span>
+                    </div>
+                    <h6 class="text-uppercase text-secondary small fw-bold mb-2">O‘yin Qoidalari:</h6>
+                    <p id="modal-game-rules" class="mb-3 fs-6">Qoidalar matni...</p>
+                    <div class="p-3 rounded-3 bg-secondary bg-opacity-10 border border-secondary border-opacity-25 small text-secondary">
+                        <i class="bi bi-lightbulb text-warning me-1"></i> <strong>Maslahat:</strong> Qanchalik tez to‘g‘ri javob bersangiz, shuncha ko‘p tezlik bonusi va Combo ball olasiz!
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary border-opacity-25">
+                    <button type="button" class="btn btn-outline-secondary rounded-3" data-bs-dismiss="modal">Bekor qilish</button>
+                    <button type="button" class="btn btn-glow px-4" id="modal-start-btn">
+                        <i class="fa-solid fa-play me-2"></i> Boshlash
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container text-center">
+            <div class="mb-2">
+                <span class="brand-font fs-4 text-white"><i class="fa-solid fa-brain text-info me-2"></i>ZukkoArena</span>
+            </div>
+            <p class="small mb-2">Barcha yoshdagilar uchun mantiq, xotira va intellektni rivojlantiruvchi interaktiv platforma.</p>
+            <p class="small text-secondary mb-0">&copy; 2026 ZukkoArena. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- APPLICATION JAVASCRIPT (SOUND ENGINE, GAMES DATA, GAME ENGINE, APP CONTROLLER) -->
+    <script>
+    /**
+     * ============================================================================
+     * 1. SOUND ENGINE (Web Audio API Synthesizer - Hech qanday tashqi faylsiz)
+     * ============================================================================
+     */
+    const SoundEngine = {
+        ctx: null,
+        muted: false,
+
+        init() {
+            if (!this.ctx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) this.ctx = new AudioCtx();
+            }
+            if (this.ctx && this.ctx.state === 'suspended') {
+                this.ctx.resume();
+            }
+        },
+
+        toggleMute() {
+            this.muted = !this.muted;
+            const btn = document.getElementById('sound-toggle-btn');
+            if (this.muted) {
+                btn.classList.add('muted');
+                btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+            } else {
+                btn.classList.remove('muted');
+                btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                this.init();
+                this.playClick();
+            }
+        },
+
+        playTone(freq, type, duration, gainVal = 0.15, delay = 0) {
+            if (this.muted) return;
+            this.init();
+            if (!this.ctx) return;
+
+            const now = this.ctx.currentTime + delay;
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, now);
+
+            gain.gain.setValueAtTime(0.001, now);
+            gain.gain.exponentialRampToValueAtTime(gainVal, now + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+
+            osc.start(now);
+            osc.stop(now + duration + 0.02);
+        },
+
+        playClick() {
+            this.playTone(520, 'sine', 0.08, 0.1);
+        },
+
+        playStart() {
+            // O'yin boshlanishida quvnoq ko'tariluvchi akkord
+            this.playTone(440, 'triangle', 0.15, 0.15, 0);
+            this.playTone(554.37, 'triangle', 0.15, 0.15, 0.09);
+            this.playTone(659.25, 'triangle', 0.25, 0.18, 0.18);
+        },
+
+        playTick(urgent = false) {
+            // Timer ticking ovozi
+            if (urgent) {
+                this.playTone(880, 'sine', 0.05, 0.08, 0);
+            } else {
+                this.playTone(600, 'sine', 0.03, 0.03, 0);
+            }
+        },
+
+        playCorrect() {
+            // To'g'ri javob uchun yoqimli chime
+            this.playTone(587.33, 'sine', 0.14, 0.18, 0);     // D5
+            this.playTone(880, 'sine', 0.28, 0.2, 0.1);        // A5
+        },
+
+        playBonus() {
+            // Ball / Combo bonus ovozi
+            this.playTone(987.77, 'triangle', 0.12, 0.15, 0);
+            this.playTone(1318.51, 'triangle', 0.22, 0.16, 0.08);
+        },
+
+        playWrong() {
+            // Noto'g'ri javob uchun yumshoq ogohlantiruvchi ovoz
+            this.playTone(260, 'sawtooth', 0.18, 0.12, 0);
+            this.playTone(210, 'sawtooth', 0.25, 0.12, 0.12);
+        },
+
+        playTimeUp() {
+            // Vaqt tugaganda signal
+            this.playTone(392, 'square', 0.15, 0.12, 0);
+            this.playTone(311, 'square', 0.28, 0.12, 0.16);
+        },
+
+        playVictory() {
+            // G'alaba fanfarasi
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((n, idx) => {
+                this.playTone(n, 'triangle', 0.25, 0.18, idx * 0.11);
+            });
+        }
+    };
+
+    /**
+     * ============================================================================
+     * 2. GAMES CATALOG & CONTENT (20 TA TURLI MEXANIKADAGI O'YINLAR)
+     * ============================================================================
+     */
+    const GAMES_DB = [
+        // ==========================================
+        // KATEGORIYA 1: 6–9 YOSH (KICHIK DAHOLAR)
+        // ==========================================
+        {
+            id: 'k1_colors',
+            age: '6-9',
+            title: 'Ranglar Sehrgarligi',
+            icon: '🎨',
+            iconBg: 'rgba(255, 107, 107, 0.2)',
+            mechanic: 'Rang va Diqqat',
+            mechanicType: 'choice',
+            timeLimit: 20,
+            rounds: 6,
+            desc: 'Yozilgan rang nomiga emas, balki so‘zning o‘zi qaysi rangda bo‘yalganiga qarang!',
+            rules: 'Ekranda rangli so‘z paydo bo‘ladi. Masalan, "QIZIL" so‘zi ko‘k rangda yozilgan bo‘lsa, siz so‘zning RANGINI (Ko‘k) tanlashingiz kerak!',
+            generateQuestions() {
+                const colors = [
+                    { name: 'QIZIL', hex: '#ef4444' },
+                    { name: 'KO‘K', hex: '#3b82f6' },
+                    { name: 'YASHIL', hex: '#10b981' },
+                    { name: 'SARIQ', hex: '#facc15' },
+                    { name: 'BINAFSHA', hex: '#a855f7' }
+                ];
+                const qs = [];
+                for (let i = 0; i < 6; i++) {
+                    const textObj = colors[Math.floor(Math.random() * colors.length)];
+                    let inkObj = colors[Math.floor(Math.random() * colors.length)];
+                    while (inkObj.name === textObj.name) {
+                        inkObj = colors[Math.floor(Math.random() * colors.length)];
+                    }
+                    const options = shuffleArray(colors.map(c => c.name)).slice(0, 4);
+                    if (!options.includes(inkObj.name)) options[0] = inkObj.name;
+                    qs.push({
+                        prompt: `Bu so‘z qaysi <span class="text-warning">RANGDA</span> yozilgan?`,
+                        visualHTML: `<div class="my-4 py-3 px-4 rounded-4 bg-dark d-inline-block border border-secondary"><span style="font-size: 3.2rem; font-weight: 900; color: ${inkObj.hex}; letter-spacing: 2px;">${textObj.name}</span></div>`,
+                        options: shuffleArray(options),
+                        answer: inkObj.name,
+                        explanation: `So‘z "${textObj.name}" deb yozilgan bo‘lsa ham, uning rangi ${inkObj.name}!`
+                    });
+                }
+                return qs;
+            }
+        },
+        {
+            id: 'k2_oddone',
+            age: '6-9',
+            title: 'Farqni Top!',
+            icon: '🔍',
+            iconBg: 'rgba(251, 146, 60, 0.2)',
+            mechanic: 'Vizual Diqqat',
+            mechanicType: 'grid_odd',
+            timeLimit: 20,
+            rounds: 6,
+            desc: 'Bir xil hayvonchalar va mevalar orasiga yashiringan boshqacha belgini toping!',
+            rules: 'Katakchalar ichida ko‘plab bir xil rasmlar bor. Ulardan faqat bittasi boshqacha! Uni tezda topib ustiga bosing.',
+            generateQuestions() {
+                const pairs = [
+                    { same: '🐶', diff: '🐺', label: 'Bo‘rini toping!' },
+                    { same: '🍎', diff: '🍅', label: 'Pomidorni toping!' },
+                    { same: '🐱', diff: '🐯', label: 'Yo‘lbarschani toping!' },
+                    { same: '🌻', diff: '🌞', label: 'Quyoshni toping!' },
+                    { same: '🐸', diff: '🐢', label: 'Toshbaqani toping!' },
+                    { same: '🍩', diff: '🍪', label: 'Pechenyeni toping!' },
+                    { same: '🐧', diff: '🐼', label: 'Pandani toping!' }
+                ];
+                return shuffleArray(pairs).slice(0, 6).map((p, idx) => {
+                    const size = idx < 2 ? 9 : (idx < 4 ? 12 : 16);
+                    const cols = size === 9 ? 3 : 4;
+                    const diffIdx = Math.floor(Math.random() * size);
+                    const items = Array(size).fill(p.same);
+                    items[diffIdx] = p.diff;
+                    return {
+                        prompt: `${p.label} Boshqacha rasmni bosing:`,
+                        gridCols: cols,
+                        items: items,
+                        answerIndex: diffIdx,
+                        answer: p.diff,
+                        explanation: `Boshqacha rasm bu ${p.diff} edi!`
+                    };
+                });
+            }
+        },
+        {
+            id: 'k3_funmath',
+            age: '6-9',
+            title: 'Quvnoq Matematika',
+            icon: '🍎',
+            iconBg: 'rgba(52, 211, 153, 0.2)',
+            mechanic: 'Vizual Arifmetika',
+            mechanicType: 'choice',
+            timeLimit: 25,
+            rounds: 6,
+            desc: 'Mevalar va hayvonlar yordamida qiziqarli qo‘shish va ayirish misollarini yeching.',
+            rules: 'Rasmdagi mevalar yoki hayvonlarni sanang va to‘g‘ri javob raqamini tanlang.',
+            generateQuestions() {
+                const bank = [
+                    { prompt: 'Olmalarni qo‘shing: nechta olma bo‘ladi?', vis: '🍎🍎🍎 + 🍎🍎 = ?', ans: '5', opts: ['4', '5', '6', '7'], exp: '3 ta olma + 2 ta olma = 5 ta olma.' },
+                    { prompt: 'Quyonchalardan 2 tasi uyiga ketdi. Nechtasi qoldi?', vis: '🐰🐰🐰🐰🐰🐰 − 🐰🐰 = ?', ans: '4', opts: ['3', '4', '5', '2'], exp: '6 ta quyondan 2 tasi ketsa, 4 tasi qoladi.' },
+                    { prompt: 'Har bir savatda 2 tadan banan bor. Jami nechta banan?', vis: '🍌🍌 + 🍌🍌 + 🍌🍌 = ?', ans: '6', opts: ['5', '6', '8', '4'], exp: '2 + 2 + 2 = 6 ta banan.' },
+                    { prompt: 'Yulduzchalarni sanang va 3 ni qo‘shing:', vis: '⭐⭐⭐⭐ + 3 = ?', ans: '7', opts: ['6', '7', '8', '9'], exp: '4 ta yulduzcha + 3 = 7.' },
+                    { prompt: '10 ta qulupnaydan 4 tasini yedik. Nechtasi qoldi?', vis: '🍓×10 − 🍓×4 = ?', ans: '6', opts: ['5', '6', '7', '4'], exp: '10 − 4 = 6 ta qulupnay.' },
+                    { prompt: 'Kuchukcha 5 ta suyak topdi, yana 4 ta sovg‘a oldi:', vis: '🦴🦴🦴🦴🦴 + 🦴🦴🦴🦴 = ?', ans: '9', opts: ['8', '9', '10', '7'], exp: '5 + 4 = 9 ta suyak.' }
+                ];
+                return shuffleArray(bank);
+            }
+        },
+        {
+            id: 'k4_memory',
+            age: '6-9',
+            title: 'Xotira Kartochkalari',
+            icon: '🃏',
+            iconBg: 'rgba(96, 165, 250, 0.2)',
+            mechanic: 'Memory Cards',
+            mechanicType: 'memory',
+            timeLimit: 35,
+            rounds: 4,
+            desc: 'Yopiq kartochkalar ostidagi bir xil hayvonlar juftligini eslab qoling va oching!',
+            rules: 'Kartochkalarni bosib oching. Bir xil ikkita hayvonni topsangiz, ular ochiq qoladi. Barcha juftliklarni vaqt tugamasdan toping!',
+            generateQuestions() {
+                const sets = [
+                    ['🐶', '🐱', '🐭'],
+                    ['🦁', '🐯', '🐻', '🐸'],
+                    ['🦄', '🐼', '🐨', '🦊'],
+                    ['🐙', '🐬', '🐳', '🦀']
+                ];
+                return sets.map((emojis, idx) => ({
+                    prompt: `${idx + 1}-bosqich: Barcha ${emojis.length} ta juftlikni toping!`,
+                    cards: shuffleArray([...emojis, ...emojis]),
+                    answer: 'Barcha juftliklar',
+                    explanation: 'Ajoyib xotira! Barcha juftliklar topildi.'
+                }));
+            }
+        },
+        {
+            id: 'k5_shapes',
+            age: '6-9',
+            title: 'Shakllar Mosligi',
+            icon: '🧩',
+            iconBg: 'rgba(192, 132, 252, 0.2)',
+            mechanic: 'Drag & Drop / Moslash',
+            mechanicType: 'drag_match',
+            timeLimit: 30,
+            rounds: 5,
+            desc: 'Har bir jism yoki hayvonni o‘zining mos uyachasiga sudrab (yoki bosib) joylashtiring!',
+            rules: 'Yuqoridagi elementni sichqoncha bilan sudrab (yoki ustiga bosib, keyin mos katakchani bosib) to‘g‘ri joyiga qo‘ying.',
+            generateQuestions() {
+                const levels = [
+                    {
+                        prompt: 'Hayvonlarni o‘z sevimli taomiga joylashtiring:',
+                        pairs: [
+                            { item: '🐒', targetLabel: 'Banan 🍌' },
+                            { item: '🐰', targetLabel: 'Sabzi 🥕' },
+                            { item: '🐭', targetLabel: 'Pishloq 🧀' }
+                        ]
+                    },
+                    {
+                        prompt: 'Shakllarni nomiga mos katakchaga joylashtiring:',
+                        pairs: [
+                            { item: '🔴', targetLabel: 'Qizil Doira' },
+                            { item: '🟦', targetLabel: 'Ko‘k Kvadrat' },
+                            { item: '🔺', targetLabel: 'Uchburchak' }
+                        ]
+                    },
+                    {
+                        prompt: 'Transportlarni harakatlanish joyiga qo‘ying:',
+                        pairs: [
+                            { item: '✈️', targetLabel: 'Osmon ☁️' },
+                            { item: '🚢', targetLabel: 'Dengiz 🌊' },
+                            { item: '🚗', targetLabel: 'Yo‘l 🛣️' }
+                        ]
+                    },
+                    {
+                        prompt: 'Fasllarga mos belgilarni joylashtiring:',
+                        pairs: [
+                            { item: '⛄', targetLabel: 'Qish' },
+                            { item: '🌸', targetLabel: 'Bahor' },
+                            { item: '☀️', targetLabel: 'Yoz' }
+                        ]
+                    },
+                    {
+                        prompt: 'Sport anjomlarini moslashtiring:',
+                        pairs: [
+                            { item: '⚽', targetLabel: 'Futbol' },
+                            { item: '🏀', targetLabel: 'Basketbol' },
+                            { item: '🎾', targetLabel: 'Tennis' }
+                        ]
+                    }
+                ];
+                return levels.map(l => ({
+                    prompt: l.prompt,
+                    pairs: l.pairs,
+                    answer: 'To‘liq moslashtirildi',
+                    explanation: 'Barcha elementlar o‘z o‘rniga to‘g‘ri joylashtirildi!'
+                }));
+            }
+        },
+
+        // ==========================================
+        // KATEGORIYA 2: 9–14 YOSH (YOSH TADQIQOTCHILAR)
+        // ==========================================
+        {
+            id: 't1_sequence',
+            age: '9-14',
+            title: 'Raqamlar Zanjiri',
+            icon: '🔢',
+            iconBg: 'rgba(0, 210, 211, 0.2)',
+            mechanic: 'Sequence Game',
+            mechanicType: 'choice',
+            timeLimit: 25,
+            rounds: 6,
+            desc: 'Raqamlar qatoridagi yashirin qonuniyatni aniqlang va keyingi sonni toping!',
+            rules: 'Ketma-ketlik qanday qoida asosida o‘sib yoki kamayib borayotganini toping va savol belgisi o‘rnidagi sonni tanlang.',
+            generateQuestions() {
+                const bank = [
+                    { seq: '2, 5, 8, 11, 14, ?', ans: '17', opts: ['16', '17', '18', '19'], exp: 'Har bir son oldingisidan +3 ga katta: 14 + 3 = 17.' },
+                    { seq: '3, 6, 12, 24, 48, ?', ans: '96', opts: ['72', '84', '96', '64'], exp: 'Har bir son 2 ga ko‘paytirilgan: 48 × 2 = 96.' },
+                    { seq: '1, 4, 9, 16, 25, ?', ans: '36', opts: ['30', '35', '36', '49'], exp: 'Bular natural sonlarning kvadratlari: 1², 2², 3², 4², 5², 6² = 36.' },
+                    { seq: '100, 91, 83, 76, 70, ?', ans: '65', opts: ['64', '65', '66', '63'], exp: 'Ayirma har safar 1 ga kamaymoqda: -9, -8, -7, -6, -5 → 70 - 5 = 65.' },
+                    { seq: '1, 1, 2, 3, 5, 8, ?', ans: '13', opts: ['11', '12', '13', '15'], exp: 'Fibonachchi ketma-ketligi: oldingi ikki son yig‘indisi (5 + 8 = 13).' },
+                    { seq: '2, 6, 18, 54, ?', ans: '162', opts: ['108', '162', '148', '216'], exp: 'Har bir had 3 ga ko‘paytirilgan: 54 × 3 = 162.' }
+                ];
+                return shuffleArray(bank).map(item => ({
+                    prompt: 'Ketma-ketlikdagi keyingi raqamni toping:',
+                    visualHTML: `<div class="my-4 p-3 rounded-4 bg-dark border border-info border-opacity-50 fs-2 fw-black text-info tracking-wide">${item.seq}</div>`,
+                    options: shuffleArray(item.opts),
+                    answer: item.ans,
+                    explanation: item.exp
+                }));
+            }
+        },
+        {
+            id: 't2_words',
+            age: '9-14',
+            title: 'So‘z Ustasi',
+            icon: '🔤',
+            iconBg: 'rgba(56, 189, 248, 0.2)',
+            mechanic: 'Word Challenge',
+            mechanicType: 'choice',
+            timeLimit: 25,
+            rounds: 6,
+            desc: 'Aralashtirib yuborilgan harflardan yashiringan o‘zbekcha so‘zni tiklang!',
+            rules: 'Berilgan harflar to‘plami va izohga qarab, qaysi so‘z yashiringanini toping.',
+            generateQuestions() {
+                const words = [
+                    { scrambled: 'T A M E M A T I K A', hint: 'Raqamlar va formulalar fani', ans: 'MATEMATIKA', opts: ['MATEMATIKA', 'INFORMATIKA', 'GEOMETRIYA', 'ASTRONOMIYA'] },
+                    { scrambled: 'K O M P Y U T E R', hint: 'Ma’lumotlarni qayta ishlovchi qurilma', ans: 'KOMPYUTER', opts: ['KOMPYUTER', 'TELEVIZOR', 'KALKULYATOR', 'INTERNET'] },
+                    { scrambled: 'T A F A K K U R', hint: 'Chuqur o‘ylash va fikrlash qobiliyati', ans: 'TAFAKKUR', opts: ['TAFAKKUR', 'TASAVVUR', 'TABASSUM', 'TADQIQOT'] },
+                    { scrambled: 'K O I N O T', hint: 'Yulduzlar va sayyoralar olami', ans: 'KOINOT', opts: ['KOINOT', 'TABIAT', 'SAYYORA', 'GALAKTIKA'] },
+                    { scrambled: 'A L G O R I T M', hint: 'Muammoni yechish qadamlar ketma-ketligi', ans: 'ALGORITM', opts: ['ALGORITM', 'LOGARIFM', 'DASTURLASH', 'GEOMETRIYA'] },
+                    { scrambled: 'I N T E L L E K T', hint: 'Aql-idrok va bilish salohiyati', ans: 'INTELLEKT', opts: ['INTELLEKT', 'INTERNET', 'INSTINKT', 'INTERFEYS'] }
+                ];
+                return shuffleArray(words).map(w => ({
+                    prompt: `Izoh: <span class="text-info">${w.hint}</span>`,
+                    visualHTML: `<div class="my-4 p-3 rounded-4 bg-dark border border-primary fs-3 fw-black text-warning" style="letter-spacing: 3px;">${w.scrambled}</div>`,
+                    options: shuffleArray(w.opts),
+                    answer: w.ans,
+                    explanation: `Aralash harflardan "${w.ans}" so‘zi hosil bo‘ladi.`
+                }));
+            }
+        },
+        {
+            id: 't3_schulte',
+            age: '9-14',
+            title: 'Diqqat Sinovi: Schulte',
+            icon: '🎯',
+            iconBg: 'rgba(244, 63, 94, 0.2)',
+            mechanic: 'Speed & Attention Grid',
+            mechanicType: 'schulte',
+            timeLimit: 30,
+            rounds: 4,
+            desc: 'Aralash joylashgan raqamlarni 1 dan boshlab o‘sish tartibida tezda bosib chiqing!',
+            rules: 'Jadvaldagi raqamlarni 1, 2, 3... tartibida ketma-ket bosing. Ko‘zingizni jadval markazida ushlab, periferik ko‘rishdan foydalaning!',
+            generateQuestions() {
+                const sizes = [9, 9, 12, 16];
+                return sizes.map((count, idx) => {
+                    const nums = shuffleArray(Array.from({ length: count }, (_, i) => i + 1));
+                    return {
+                        prompt: `${idx + 1}-bosqich: 1 dan ${count} gacha raqamlarni tartib bilan bosing!`,
+                        numbers: nums,
+                        maxNum: count,
+                        cols: count === 9 ? 3 : 4,
+                        answer: `1 dan ${count} gacha`,
+                        explanation: `Ajoyib diqqat! 1 dan ${count} gacha barcha raqamlar topildi.`
+                    };
+                });
+            }
+        },
+        {
+            id: 't4_logicmaze',
+            age: '9-14',
+            title: 'Mantiqiy Jumboqlar',
+            icon: '🧭',
+            iconBg: 'rgba(168, 85, 247, 0.2)',
+            mechanic: 'Logic Challenge',
+            mechanicType: 'choice',
+            timeLimit: 30,
+            rounds: 6,
+            desc: 'Chalg‘ituvchi savollar va mantiqiy tuzoqlardan o‘tib to‘g‘ri xulosani toping.',
+            rules: 'Matnni diqqat bilan o‘qing. Ko‘pincha javob savolning o‘zida yashiringan bo‘ladi!',
+            generateQuestions() {
+                const puzzles = [
+                    { q: 'Yugurish musobaqasida siz 2-o‘rinda ketayotgan sportchini quvib o‘tdingiz. Hozir nechanchi o‘rindasiz?', ans: '2-o‘rinda', opts: ['1-o‘rinda', '2-o‘rinda', '3-o‘rinda', '4-o‘rinda'], exp: '2-o‘rindagi odamni quvib o‘tsangiz, uning o‘rnini egallaysiz — ya’ni 2-o‘ringa chiqasiz!' },
+                    { q: '1 kilogramm temir og‘irmi yoki 1 kilogramm paxta?', ans: 'Ikkalasi teng', opts: ['1 kg temir', '1 kg paxta', 'Ikkalasi teng', 'Temir 2 baravar og‘ir'], exp: 'Ikkalasining ham vazni 1 kilogrammdan, demak ular teng!' },
+                    { q: 'Xonada 4 ta burchak bor. Har bir burchakda 1 tadan mushuk o‘tiribdi. Har bir mushukning ro‘parasida 3 tadan mushuk bor. Xonada jami nechta mushuk bor?', ans: '4 ta', opts: ['4 ta', '12 ta', '16 ta', '8 ta'], exp: 'Xonada faqat 4 ta burchak va har birida 1 tadan — jami 4 ta mushuk bor.' },
+                    { q: 'Qaysi oyda 28 kun bor?', ans: 'Barcha oylarda', opts: ['Faqat Fevralda', 'Barcha oylarda', 'Dekabrda', 'Hech qaysisida'], exp: 'Har bir oyda kamida 28 ta kun mavjud!' },
+                    { q: 'O‘rmonda 3 ta daraxt bor. Har bir daraxtda 4 tadan shox, har bir shoxda 2 tadan olma bor. Jami nechta nok bor?', ans: '0 ta (nok yo‘q)', opts: ['24 ta', '12 ta', '0 ta (nok yo‘q)', '6 ta'], exp: 'Daraxtlarda olma o‘sgan, nok emas! Javob: 0 ta.' },
+                    { q: 'Anvarning otasining 4 ta o‘g‘li bor: Birinchi, Ikkinchi, Uchinchi. To‘rtinchi o‘g‘ilning ismi nima?', ans: 'Anvar', opts: ['To‘rtinchi', 'Anvar', 'Sardor', 'Bilol'], exp: 'Gap Anvarning otasi haqida ketmoqda, demak 4-o‘g‘il — Anvarning o‘zi!' }
+                ];
+                return shuffleArray(puzzles).map(p => ({
+                    prompt: 'Mantiqiy savolga javob bering:',
+                    visualHTML: `<div class="my-3 p-4 rounded-4 bg-dark border border-secondary fs-5 fw-bold">${p.q}</div>`,
+                    options: shuffleArray(p.opts),
+                    answer: p.ans,
+                    explanation: p.exp
+                }));
+            }
+        },
+        {
+            id: 't5_speedmath',
+            age: '9-14',
+            title: 'Tezkor Hisob',
+            icon: '⚡',
+            iconBg: 'rgba(250, 204, 21, 0.2)',
+            mechanic: 'Speed Math Challenge',
+            mechanicType: 'choice',
+            timeLimit: 20,
+            rounds: 6,
+            desc: 'Vaqt tugamasdan murakkabroq arifmetik amallarni miyada tez hisoblang!',
+            rules: 'Amallar tartibiga (ko‘paytirish va bo‘lish birinchi bajarilishiga) e’tibor bering!',
+            generateQuestions() {
+                const qs = [];
+                for (let i = 0; i < 6; i++) {
+                    const a = Math.floor(Math.random() * 12) + 4;
+                    const b = Math.floor(Math.random() * 8) + 3;
+                    const c = Math.floor(Math.random() * 15) + 5;
+                    const isAdd = i % 2 === 0;
+                    const expr = isAdd ? `${a} × ${b} + ${c} = ?` : `${a * b} ÷ ${b} + ${c} = ?`;
+                    const ansVal = isAdd ? (a * b + c) : (a + c);
+                    const opts = new Set([ansVal]);
+                    while (opts.size < 4) {
+                        const offset = Math.floor(Math.random() * 11) - 5;
+                        if (ansVal + offset > 0) opts.add(ansVal + offset);
+                    }
+                    qs.push({
+                        prompt: 'Ifodaning qiymatini tezda hisoblang:',
+                        visualHTML: `<div class="my-4 p-3 rounded-4 bg-dark border border-warning fs-1 fw-black text-warning">${expr}</div>`,
+                        options: shuffleArray(Array.from(opts).map(String)),
+                        answer: String(ansVal),
+                        explanation: `${expr.replace('?', ansVal)}`
+                    });
+                }
+                return qs;
+            }
+        },
+
+        // ==========================================
+        // KATEGORIYA 3: 14–19 YOSH (INTELLEKTUAL LIGA)
+        // ==========================================
+        {
+            id: 'y1_cipher',
+            age: '14-19',
+            title: 'Kriptografiya: Shifrni Yech',
+            icon: '🔐',
+            iconBg: 'rgba(165, 94, 234, 0.2)',
+            mechanic: 'Code & Cipher Breaker',
+            mechanicType: 'choice',
+            timeLimit: 30,
+            rounds: 6,
+            desc: 'Sezar shifri va ramzli kodlar yordamida yashirilgan maxfiy so‘zlarni oching!',
+            rules: 'Kalit qoidasini tahlil qiling (masalan, har bir harf alifboda +1 yoki +2 o‘ringa surilgan) va shifrlangan so‘zning asl ma’nosini toping.',
+            generateQuestions() {
+                const ciphers = [
+                    { code: 'N B O U J R', hint: 'Kalit: Har bir harf alifboda 1 ta keyingi harfga almashtirilgan (A→B, B→C...)', ans: 'MANTIQ', opts: ['MANTIQ', 'XOTIRA', 'RAQAML', 'BILIML'], exp: 'M→N, A→B, N→O, T→U, I→J, Q→R → MANTIQ.' },
+                    { code: '3 - 15 - 4', hint: 'Kalit: Harflarning ingliz alifbosidagi tartib raqami (A=1, B=2, C=3, D=4, O=15)', ans: 'COD', opts: ['COD', 'BOT', 'DOC', 'TOP'], exp: '3=C, 15=O, 4=D → COD.' },
+                    { code: 'Z U K K O → A V L L P', hint: 'Xuddi shu shifrlash qoidasi bilan "A Q L" so‘zi qanday yoziladi?', ans: 'B R M', opts: ['B R M', 'Z P K', 'C S N', 'B Q M'], exp: 'Har bir harf +1 ga surilgan: A→B, Q→R, L→M.' },
+                    { code: '8 - 1 - 11 - 5 - 18', hint: 'Kalit: A=1, E=5, H=8, K=11, R=18', ans: 'HAKER', opts: ['HAKER', 'KODER', 'ROBOT', 'LIDER'], exp: '8=H, 1=A, 11=K, 5=E, 18=R → HAKER.' },
+                    { code: 'T E S K A R I → I R A K S E T', hint: 'Ushbu shifrlash usulida "S T R A T E G" qanday ko‘rinadi?', ans: 'G E T A R T S', opts: ['G E T A R T S', 'S T R A G E T', 'G E T S A R T', 'T E G A R T S'], exp: 'So‘z teskari tartibda yozilgan: G-E-T-A-R-T-S.' },
+                    { code: '20 - 15 - 16', hint: 'Kalit: O=15, P=16, T=20', ans: 'TOP', opts: ['TOP', 'POT', 'OPT', 'BOT'], exp: '20=T, 15=O, 16=P → TOP.' }
+                ];
+                return shuffleArray(ciphers).map(c => ({
+                    prompt: `<span class="text-info">${c.hint}</span>`,
+                    visualHTML: `<div class="my-4 p-3 rounded-4 bg-dark border border-purple fs-2 fw-black text-warning font-monospace">${c.code}</div>`,
+                    options: shuffleArray(c.opts),
+                    answer: c.ans,
+                    explanation: c.exp
+                }));
+            }
+        },
+        {
+            id: 'y2_iqmatrix',
+            age: '14-19',
+            title: 'IQ Matritsa',
+            icon: '💠',
+            iconBg: 'rgba(139, 92, 246, 0.2)',
+            mechanic: 'IQ Pattern Matrix',
+            mechanicType: 'choice',
+            timeLimit: 30,
+            rounds: 6,
+            desc: '3x3 mantiqiy jadvaldagi qator va ustunlar qonuniyatini topib, yetishmayotgan katakni to‘ldiring.',
+            rules: 'Har bir qatorda belgilar yoki sonlar ma’lum qoida asosida o‘zgaradi. Pastki o‘ng burchakdagi "?" o‘rniga mos javobni tanlang.',
+            generateQuestions() {
+                const matrices = [
+                    {
+                        grid: ['2', '4', '8', '3', '6', '12', '5', '10', '?'],
+                        ans: '20',
+                        opts: ['15', '20', '25', '18'],
+                        exp: 'Har bir qatorda keyingi son 2 ga ko‘paytirilgan: 5 × 2 = 10, 10 × 2 = 20.'
+                    },
+                    {
+                        grid: ['🔺', '🟦', '🟢', '🟦', '🟢', '🔺', '🟢', '🔺', '?'],
+                        ans: '🟦',
+                        opts: ['🔺', '🟦', '🟢', '⭐'],
+                        exp: 'Sudoku qoidasi: har bir qator va ustunda uchala shakl bir martadan qatnashishi kerak → 🟦.'
+                    },
+                    {
+                        grid: ['4', '9', '13', '7', '8', '15', '11', '14', '?'],
+                        ans: '25',
+                        opts: ['23', '24', '25', '26'],
+                        exp: 'Uchinchi ustun birinchi ikki ustun yig‘indisiga teng: 11 + 14 = 25.'
+                    },
+                    {
+                        grid: ['⬆️', '➡️', '⬇️', '➡️', '⬇️', '⬅️', '⬇️', '⬅️', '?'],
+                        ans: '⬆️',
+                        opts: ['⬆️', '➡️', '⬇️', '⬅️'],
+                        exp: 'Strelka har qadamda soat strelkasi bo‘yicha 90° ga burilmoqda → ⬆️.'
+                    },
+                    {
+                        grid: ['3', '5', '15', '4', '6', '24', '7', '8', '?'],
+                        ans: '56',
+                        opts: ['48', '54', '56', '64'],
+                        exp: 'Uchinchi ustun birinchi ikki sonning ko‘paytmasiga teng: 7 × 8 = 56.'
+                    },
+                    {
+                        grid: ['🌑', '🌓', '🌕', '🌓', '🌕', '🌗', '🌕', '🌗', '?'],
+                        ans: '🌑',
+                        opts: ['🌑', '🌓', '🌕', '🌗'],
+                        exp: 'Oy fazalari siklik ravishda almashmoqda → 🌑.'
+                    }
+                ];
+                return shuffleArray(matrices).map(m => {
+                    const cellsHTML = m.grid.map(cell => `
+                        <div class="p-3 rounded-3 bg-dark border ${cell === '?' ? 'border-warning text-warning' : 'border-secondary text-white'} fs-3 fw-black d-flex align-items-center justify-content-center" style="aspect-ratio:1;">
+                            ${cell}
+                        </div>
+                    `).join('');
+                    return {
+                        prompt: 'Matritsadagi "?" o‘rniga mos keluvchi elementni toping:',
+                        visualHTML: `<div class="d-grid mx-auto my-3" style="grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 260px;">${cellsHTML}</div>`,
+                        options: shuffleArray(m.opts),
+                        answer: m.ans,
+                        explanation: m.exp
+                    };
+                });
+            }
+        },
+        {
+            id: 'y3_nimstrategy',
+            age: '14-19',
+            title: 'Strategik Toshlar (Nim)',
+            icon: '♟️',
+            iconBg: 'rgba(99, 102, 241, 0.2)',
+            mechanic: 'Interactive Strategy Game',
+            mechanicType: 'nim',
+            timeLimit: 35,
+            rounds: 4,
+            desc: 'Aqlli raqibga qarshi strategik o‘yin! Oxirgi toshni olgan o‘yinchi g‘olib bo‘ladi.',
+            rules: 'Stolda toshlar bor. Siz bir yurishda 1, 2 yoki 3 ta tosh olishingiz mumkin. Keyin kompyuter yuradi. Oxirgi toshni olgan g‘alaba qozonadi! (Maslahat: raqibga 4 ga karrali tosh qoldiring).',
+            generateQuestions() {
+                const counts = [6, 7, 10, 11];
+                return counts.map((c, idx) => ({
+                    prompt: `${idx + 1}-partiya: Stolda ${c} ta tosh bor. Oxirgi toshni olishga harakat qiling!`,
+                    initialStones: c,
+                    answer: 'G‘alaba',
+                    explanation: '4 ga karrali qoldiq strategiyasi (4, 8...) g‘alabani kafolatlaydi!'
+                }));
+            }
+        },
+        {
+            id: 'y4_algebra',
+            age: '14-19',
+            title: 'Algebraik Duel',
+            icon: '📐',
+            iconBg: 'rgba(14, 165, 233, 0.2)',
+            mechanic: 'Math & Equation Challenge',
+            mechanicType: 'choice',
+            timeLimit: 30,
+            rounds: 6,
+            desc: 'Tenglamalar sistemasi va yashirin o‘zgaruvchilar qiymatini mantiqan toping.',
+            rules: 'Berilgan tenglamalardan foydalanib, noma’lum X yoki so‘ralgan ifodaning qiymatini aniqlang.',
+            generateQuestions() {
+                const bank = [
+                    { eq: 'Agar 3x + 7 = 28 bo‘lsa, 2x − 1 nechaga teng?', ans: '13', opts: ['11', '13', '15', '14'], exp: '3x = 21 → x = 7. Demak, 2(7) − 1 = 13.' },
+                    { eq: 'A + B = 20 va A − B = 6 bo‘lsa, A × B nechaga teng?', ans: '91', opts: ['84', '91', '96', '100'], exp: '2A = 26 → A = 13, B = 7. Ko‘paytma: 13 × 7 = 91.' },
+                    { eq: 'Agar x² − 9 = 40 (x > 0) bo‘lsa, x + 3 nechaga teng?', ans: '10', opts: ['7', '9', '10', '12'], exp: 'x² = 49 → x = 7. Demak, 7 + 3 = 10.' },
+                    { eq: 'Sonning 25% i 18 ga teng bo‘lsa, shu sonning yarmi nechaga teng?', ans: '36', opts: ['36', '45', '72', '27'], exp: '25% = 1/4 qism. Son = 18 × 4 = 72. Uning yarmi = 36.' },
+                    { eq: '2ˣ = 32 va 3ʸ = 27 bo‘lsa, x + y nechaga teng?', ans: '8', opts: ['7', '8', '9', '10'], exp: '2⁵ = 32 (x=5) va 3³ = 27 (y=3). Yig‘indi: 5 + 3 = 8.' },
+                    { eq: 'Uchta ketma-ket juft sonning yig‘indisi 42 ga teng. Eng katta sonni toping.', ans: '16', opts: ['12', '14', '16', '18'], exp: 'Sonlar: 12, 14, 16 (12+14+16=42). Eng kattasi — 16.' }
+                ];
+                return shuffleArray(bank).map(item => ({
+                    prompt: 'Algebraik masalani yeching:',
+                    visualHTML: `<div class="my-4 p-4 rounded-4 bg-dark border border-info fs-4 fw-bold text-white">${item.eq}</div>`,
+                    options: shuffleArray(item.opts),
+                    answer: item.ans,
+                    explanation: item.exp
+                }));
+            }
+        },
+        {
+            id: 'y5_situations',
+            age: '14-19',
+            title: 'Vaziyat Tahlili',
+            icon: '🧭',
+            iconBg: 'rgba(236, 72, 153, 0.2)',
+            mechanic: 'Critical Problem Solving',
+            mechanicType: 'choice',
+            timeLimit: 35,
+            rounds: 5,
+            desc: 'Muammoli vaziyatlarda eng optimal va mantiqiy qarorni qabul qiling.',
+            rules: 'Vaziyatni tahlil qiling va eng kam resurs yoki vaqt sarflab muammoni hal qiladigan yechimni tanlang.',
+            generateQuestions() {
+                const cases = [
+                    {
+                        scenario: 'Sizda 9 ta bir xil ko‘rinishdagi oltin tanga bor, lekin ulardan 1 tasi soxta va boshqalaridan biroz yengil. Pallali tarozida toshlarsiz eng kamida necha marta o‘lchab soxta tangani aniq topish mumkin?',
+                        ans: '2 marta',
+                        opts: ['1 marta', '2 marta', '3 marta', '4 marta'],
+                        exp: 'Tangalarni 3 tadan 3 guruhga bo‘lamiz: 1-o‘lchashda qaysi uchlik yengilligi (yoki tengligi) aniqlanadi, 2-o‘lchashda o‘sha uchlikdan soxtasi topiladi!'
+                    },
+                    {
+                        scenario: 'Qorong‘u xonada 1 ta gugurt cho‘pingiz bor. Xonada kerosin lampa, sham va o‘tinli pechka turibdi. Birinchi bo‘lib nimani yoqasiz?',
+                        ans: 'Gugurt cho‘pini',
+                        opts: ['Kerosin lampani', 'Shamni', 'O‘tinli pechkani', 'Gugurt cho‘pini'],
+                        exp: 'Boshqa narsalarni yoqish uchun avval gugurt cho‘pining o‘zini yoqish kerak!'
+                    },
+                    {
+                        scenario: 'Ikki kishi daryo qirg‘og‘iga keldi. Qayiq faqat 1 kishini ko‘tara oladi, lekin ikkalasi ham daryodan muvaffaqiyatli o‘tib oldi. Qanday qilib?',
+                        ans: 'Ular qarama-qarshi qirg‘oqlarda edi',
+                        opts: ['Qayiqni arqon bilan tortishdi', 'Ular qarama-qarshi qirg‘oqlarda edi', 'Biri suzib o‘tdi', 'Qayiq buzilib qoldi'],
+                        exp: 'Ular daryoning ikki xil qirg‘og‘ida turishgan edi: avval biri o‘tdi, keyin ikkinchisi qayiqni olib qaytdi.'
+                    },
+                    {
+                        scenario: 'Kechasi 4 kishi ko‘prikdan o‘tishi kerak. Ularda faqat 1 ta fonar bor, ko‘prik esa ko‘pi bilan 2 kishini ko‘taradi. O‘tish vaqtlari: 1, 2, 5 va 10 daqiqa. Eng kamida necha daqiqada hammasi o‘ta oladi?',
+                        ans: '17 daqiqa',
+                        opts: ['17 daqiqa', '19 daqiqa', '18 daqiqa', '15 daqiqa'],
+                        exp: '1 va 2 o‘tadi (2 daq), 1 qaytadi (1 daq), 5 va 10 o‘tadi (10 daq), 2 qaytadi (2 daq), 1 va 2 o‘tadi (2 daq) = 17 daqiqa!'
+                    },
+                    {
+                        scenario: 'Soat 3:15 ni ko‘rsatmoqda. Soat va daqiqa strelkalari orasidagi burchak nechaga teng?',
+                        ans: '7.5 daraja',
+                        opts: ['0 daraja', '7.5 daraja', '15 daraja', '5 daraja'],
+                        exp: '15 daqiqada daqiqa strelkasi 3 da turadi, soat strelkasi esa 3 dan 4 gacha bo‘lgan 30° ning 1/4 qismiga (7.5°) siljigan bo‘ladi.'
+                    }
+                ];
+                return shuffleArray(cases).map(c => ({
+                    prompt: 'Vaziyatni tahlil qiling:',
+                    visualHTML: `<div class="my-3 p-4 rounded-4 bg-dark border border-secondary text-start fs-6 lh-base">${c.scenario}</div>`,
+                    options: shuffleArray(c.opts),
+                    answer: c.ans,
+                    explanation: c.exp
+                }));
+            }
+        },
+
+        // ==========================================
+        // KATEGORIYA 4: 19+ YOSH (GROSSMEYSTERLAR)
+        // ==========================================
+        {
+            id: 'a1_deductive',
+            age: '19+',
+            title: 'Deduktiv Detektiv',
+            icon: '🕵️',
+            iconBg: 'rgba(254, 202, 87, 0.2)',
+            mechanic: 'Deductive Elimination',
+            mechanicType: 'choice',
+            timeLimit: 35,
+            rounds: 5,
+            desc: 'Dalillar va guvohliklarni solishtirib, haqiqatni yolg‘ondan ajrating.',
+            rules: 'Berilgan shartlarning barchasi bir vaqtda bajariladigan yagona to‘g‘ri xulosani deduksiya usuli bilan aniqlang.',
+            generateQuestions() {
+                const cases = [
+                    {
+                        clues: 'Uchta quti bor: "Oltin", "Kumush" va "Bo‘sh". Qutilardagi BARCHA yozuvlar yolg‘on! Siz "Oltin" deb yozilgan qutini ochdingiz va u bo‘sh chiqdi. Kumush qayerda?',
+                        ans: '"Bo‘sh" deb yozilgan qutida',
+                        opts: ['"Oltin" qutisida', '"Kumush" qutisida', '"Bo‘sh" deb yozilgan qutida', 'Hech qayerda yo‘q'],
+                        exp: '"Kumush" qutisidagi yozuv yolg‘on bo‘lgani uchun unda kumush yo‘q. "Oltin" qutisi bo‘sh chiqdi. Demak, kumush "Bo‘sh" yozuvli qutida!'
+                    },
+                    {
+                        clues: 'Alisher, Bobur va Sardor — dasturchi, shifokor va me’mor (tartib aralash). 1) Alisher shifokor emas. 2) Bobur me’mor ham, dasturchi ham emas. Sardor kim?',
+                        ans: 'Me’mor',
+                        opts: ['Dasturchi', 'Shifokor', 'Me’mor', 'Aniqlab bo‘lmaydi'],
+                        exp: '2-shartdan Bobur — shifokor. 1-shartdan Alisher shifokor emas (u dasturchi). Demak, Sardor — Me’mor.'
+                    },
+                    {
+                        clues: 'Ritsarlar har doim rost gapiradi, yolg‘onchilar esa har doim yolg‘on. A shunday dedi: "B — yolg‘onchi". B esa dedi: "Ikkalamiz bir xil toifadagi odamlarmiz". A va B kim?',
+                        ans: 'A — ritsar, B — yolg‘onchi',
+                        opts: ['Ikkalasi ritsar', 'Ikkalasi yolg‘onchi', 'A — ritsar, B — yolg‘onchi', 'A — yolg‘onchi, B — ritsar'],
+                        exp: 'Agar A yolg‘onchi bo‘lsa, B ritsar bo‘lishi kerak edi, lekin unda B rost gapirib "bir xilmiz" demagan bo‘lardi. Demak, A rostgo‘y (ritsar), B esa yolg‘onchi.'
+                    },
+                    {
+                        clues: '4 ta mashina poygada qatnashdi: Qizil, Ko‘k, Yashil, Sariq. Qizil Ko‘kdan oldin keldi, lekin birinchi emas. Sariq Yashildan keyin keldi. Ko‘k oxirgi emas. Kim 1-o‘rinni oldi?',
+                        ans: 'Yashil',
+                        opts: ['Qizil', 'Ko‘k', 'Yashil', 'Sariq'],
+                        exp: 'Qizil 1-emas va Ko‘kdan oldin. Ko‘k oxirgi emas → demak, Sariq oxirgi (4-o‘rin). Tartib: 1-Yashil, 2-Qizil, 3-Ko‘k, 4-Sariq.'
+                    },
+                    {
+                        clues: 'Seyf kodi 3 xonali son. 682 — bitta raqam to‘g‘ri va o‘z joyida. 614 — bitta raqam to‘g‘ri, lekin joyi noto‘g‘ri. 206 — ikkita raqam to‘g‘ri, lekin joyi noto‘g‘ri. Kod nechaga teng?',
+                        ans: '042',
+                        opts: ['042', '062', '602', '240'],
+                        exp: '682 va 614 dan 6 raqami kodda yo‘qligi kelib chiqadi (joyi ham o‘zgargan, ham o‘zgarmagan bo‘lolmaydi). 206 dan 2 va 0 bor, joyi noto‘g‘ri → 0 birinchi, 2 oxirgi. 614 dan 4 o‘rtada: 042.'
+                    }
+                ];
+                return shuffleArray(cases).map(c => ({
+                    prompt: 'Deduktiv tahlil o‘tkazing:',
+                    visualHTML: `<div class="my-3 p-4 rounded-4 bg-dark border border-warning border-opacity-50 text-start fs-6 lh-base">${c.clues}</div>`,
+                    options: shuffleArray(c.opts),
+                    answer: c.ans,
+                    explanation: c.exp
+                }));
+            }
+        },
+        {
+            id: 'a2_probability',
+            age: '19+',
+            title: 'Ehtimollar va Strategiya',
+            icon: '🎲',
+            iconBg: 'rgba(16, 185, 129, 0.2)',
+            mechanic: 'Game Theory & Probability',
+            mechanicType: 'choice',
+            timeLimit: 35,
+            rounds: 5,
+            desc: 'O‘yinlar nazariyasi, ehtimollar va matematik kutish asosida eng foydali qarorni tanlang.',
+            rules: 'Intuitsiyaga emas, balki aniq matematik hisob-kitob va strategik ustunlikka tayaning.',
+            generateQuestions() {
+                const bank = [
+                    {
+                        q: 'Monty Hall paradoksi: 3 ta eshik ortida 1 ta avtomobil va 2 ta echki bor. Siz 1-eshikni tanladingiz. Boshlovchi 3-eshikni ochib, echki borligini ko‘rsatdi. G‘alaba ehtimolini oshirish uchun tanlovni 2-eshikka o‘zgartirish kerakmi?',
+                        ans: 'Ha, ehtimol 2/3 ga oshadi',
+                        opts: ['Yo‘q, ehtimol 1/2 ga teng', 'Ha, ehtimol 2/3 ga oshadi', 'Farqi yo‘q', 'O‘zgartirsa 1/3 ga tushadi'],
+                        exp: 'Boshlang‘ich tanlov to‘g‘ri bo‘lish ehtimoli 1/3 edi. Boshlovchi bo‘sh eshikni ochgach, qolgan 2/3 ehtimol ikkinchi eshikka o‘tadi!'
+                    },
+                    {
+                        q: 'Xaltada 5 ta oq va 5 ta qora shar bor. Qaramasdan kamida nechta shar olsangiz, ular orasida albatta bir xil rangdagi 2 ta shar bo‘lishi 100% kafolatlanadi?',
+                        ans: '3 ta',
+                        opts: ['2 ta', '3 ta', '6 ta', '5 ta'],
+                        exp: 'Dirixle prinsipi: 2 xil rang bor, demak 3 ta shar olinsa kamida ikkitasi albatta bir xil rangda bo‘ladi.'
+                    },
+                    {
+                        q: 'Ikki o‘yinchi bir vaqtda "Hamkorlik" yoki "Xiyonat" tugmasini bosadi (Mahbus dilemmasi). Agar raqibingiz nima bosishidan qat’i nazar, sizning shaxsiy ballingizni maksimal qiluvchi (dominant) strategiya qaysi?',
+                        ans: 'Xiyonat qilish',
+                        opts: ['Hamkorlik qilish', 'Xiyonat qilish', 'Tanga tashlash', 'Navbatma-navbat bosish'],
+                        exp: 'Klassik bir martalik Mahbus dilemmasida "Xiyonat" har ikki holatda ham yuqoriroq individual to‘lov beruvchi dominant strategiyadir.'
+                    },
+                    {
+                        q: 'Tanga 3 marta tashlandi. Kamida bitta "Gerb" tushish ehtimoli nechaga teng?',
+                        ans: '7/8 (87.5%)',
+                        opts: ['1/2 (50%)', '3/8 (37.5%)', '7/8 (87.5%)', '3/4 (75%)'],
+                        exp: 'Umuman gerb tushmaslik (3 ta raqam) ehtimoli (1/2)³ = 1/8. Demak, kamida 1 ta gerb tushish ehtimoli 1 − 1/8 = 7/8.'
+                    },
+                    {
+                        q: 'Kompaniya aksiyasi 1-kuni 50% ga oshdi, 2-kuni esa 50% ga tushdi. Boshlang‘ich narxga nisbatan aksiya narxi qanday o‘zgardi?',
+                        ans: '25% ga arzonlashdi',
+                        opts: ['O‘zgarmadi (0%)', '25% ga arzonlashdi', '10% ga oshdi', '50% ga arzonlashdi'],
+                        exp: '100 → +50% = 150 → −50% = 75. Natijada 100 dan 75 ga, ya’ni 25% ga kamaydi.'
+                    }
+                ];
+                return shuffleArray(bank).map(item => ({
+                    prompt: 'Strategik qaror qabul qiling:',
+                    visualHTML: `<div class="my-3 p-4 rounded-4 bg-dark border border-success border-opacity-50 text-start fs-6 lh-base">${item.q}</div>`,
+                    options: shuffleArray(item.opts),
+                    answer: item.ans,
+                    explanation: item.exp
+                }));
+            }
+        },
+        {
+            id: 'a3_maxmemory',
+            age: '19+',
+            title: 'Maksimal Xotira: Matritsa',
+            icon: '🧠',
+            iconBg: 'rgba(59, 130, 246, 0.2)',
+            mechanic: 'Visual Spatial Recall',
+            mechanicType: 'memory_matrix',
+            timeLimit: 30,
+            rounds: 5,
+            desc: '2 soniya ichida yonib o‘chadigan katakchalar o‘rnini eslab qoling va aniq tiklang!',
+            rules: 'Avval yashil rangda yonadigan kataklarni diqqat bilan eslab qoling. Ular o‘chgach, xuddi o‘sha kataklarni bosib belgilang!',
+            generateQuestions() {
+                const levels = [
+                    { gridSize: 9, targetsCount: 4 },
+                    { gridSize: 9, targetsCount: 5 },
+                    { gridSize: 16, targetsCount: 5 },
+                    { gridSize: 16, targetsCount: 6 },
+                    { gridSize: 16, targetsCount: 7 }
+                ];
+                return levels.map((lvl, idx) => {
+                    const indices = shuffleArray(Array.from({ length: lvl.gridSize }, (_, i) => i)).slice(0, lvl.targetsCount);
+                    return {
+                        prompt: `${idx + 1}-bosqich: ${lvl.targetsCount} ta yashirin katakni eslab qoling va tiklang!`,
+                        gridSize: lvl.gridSize,
+                        cols: lvl.gridSize === 9 ? 3 : 4,
+                        targets: indices,
+                        answer: `${lvl.targetsCount} ta katak`,
+                        explanation: 'Ajoyib vizual-fazoviy xotira!'
+                    };
+                });
+            }
+        },
+        {
+            id: 'a4_cognitive',
+            age: '19+',
+            title: 'Kognitiv Moslashuv',
+            icon: '⚙️',
+            iconBg: 'rgba(249, 115, 22, 0.2)',
+            mechanic: 'Executive Task-Switching',
+            mechanicType: 'choice',
+            timeLimit: 20,
+            rounds: 6,
+            desc: 'Tez o‘zgaruvchi qoidalar (JUFT/TOQ yoki UNLI/UNDOSH) bo‘yicha miyangizni soniyalar ichida qayta sozlang!',
+            rules: 'Yuqorida ko‘rsatilgan JORIY QOIDA ga qarang! Agar qoida "SON" desa raqamga, "HARF" desa harfga qarab javob bering.',
+            generateQuestions() {
+                const tasks = [
+                    { rule: 'SONGA QARANG: Son JUFTMI?', card: 'B - 8', ans: 'HA (Juft)', opts: ['HA (Juft)', 'YO‘Q (Toq)'], exp: '8 — juft son, demak javob HA.' },
+                    { rule: 'HARFGA QARANG: Harf UNLIMI?', card: 'E - 7', ans: 'HA (Unli)', opts: ['HA (Unli)', 'YO‘Q (Undosh)'], exp: 'E — unli harf, 7 raqami chalg‘itish uchun berilgan.' },
+                    { rule: 'SONGA QARANG: Son 5 DAN KATTAMI?', card: 'A - 4', ans: 'YO‘Q', opts: ['HA', 'YO‘Q'], exp: '4 soni 5 dan kichik.' },
+                    { rule: 'HARFGA QARANG: Harf UNDOSHMU?', card: 'K - 2', ans: 'HA (Undosh)', opts: ['HA (Undosh)', 'YO‘Q (Unli)'], exp: 'K — undosh harf.' },
+                    { rule: 'SONGA QARANG: Son TUB SONMI?', card: 'O - 9', ans: 'YO‘Q', opts: ['HA', 'YO‘Q'], exp: '9 soni 3 ga bo‘linadi, demak tub son emas.' },
+                    { rule: 'HARFGA QARANG: Alifboda "M" dan OLDIN keladimi?', card: 'D - 99', ans: 'HA', opts: ['HA', 'YO‘Q'], exp: 'D harfi alifboda M dan oldin keladi.' }
+                ];
+                return shuffleArray(tasks).map(t => ({
+                    prompt: `<span class="badge bg-warning text-dark fs-6 px-3 py-2">${t.rule}</span>`,
+                    visualHTML: `<div class="my-4 p-4 rounded-4 bg-dark border border-warning fs-1 fw-black text-white tracking-widest">${t.card}</div>`,
+                    options: t.opts,
+                    answer: t.ans,
+                    explanation: t.exp
+                }));
+            }
+        },
+        {
+            id: 'a5_paradox',
+            age: '19+',
+            title: 'Mantiqiy Paradokslar',
+            icon: '♾️',
+            iconBg: 'rgba(139, 92, 246, 0.2)',
+            mechanic: 'Syllogism & Analytical Logic',
+            mechanicType: 'choice',
+            timeLimit: 35,
+            rounds: 5,
+            desc: 'Sillogizmlar va falsafiy-mantiqiy ziddiyatlarni tahlil qilib, yagona to‘g‘ri xulosani chiqaring.',
+            rules: 'Barcha berilgan asoslardan (premissalardan) mantiqan kelib chiquvchi xulosani toping.',
+            generateQuestions() {
+                const bank = [
+                    {
+                        q: 'Premissa 1: Barcha faylasuflar mantiqni biladi.\nPremissa 2: Ba’zi shaxmatchilar faylasufdir.\nQaysi xulosa mantiqan 100% to‘g‘ri?',
+                        ans: 'Ba’zi shaxmatchilar mantiqni biladi',
+                        opts: [
+                            'Barcha shaxmatchilar mantiqni biladi',
+                            'Ba’zi shaxmatchilar mantiqni biladi',
+                            'Mantiqni biladiganlar shaxmatchidir',
+                            'Hech bir shaxmatchi faylasuf emas'
+                        ],
+                        exp: 'Faylasuf bo‘lgan shaxmatchilar barcha faylasuflar kabi mantiqni biladi.'
+                    },
+                    {
+                        q: 'Sartarosh paradoksi: Shaharda faqat o‘z sochini o‘zi olmaydigan barcha erkaklarning sochini oladigan bitta sartarosh bor. Sartarosh o‘z sochini o‘zi oladimi?',
+                        ans: 'Bu shart mantiqiy ziddiyat (paradoks) yaratadi',
+                        opts: [
+                            'Ha, har kuni oladi',
+                            'Yo‘q, hech qachon olmaydi',
+                            'Bu shart mantiqiy ziddiyat (paradoks) yaratadi',
+                            'Faqat yakshanba kunlari oladi'
+                        ],
+                        exp: 'Rassel paradoksi: agar u o‘z sochini olsa, qoidaga ko‘ra olmasligi kerak; olmasa, qoidaga ko‘ra olishi shart!'
+                    },
+                    {
+                        q: 'Agar "Yomg‘ir yog‘sa, ko‘cha ho‘l bo‘ladi" hukmi rost bo‘lsa, quyidagilardan qaysi biri albatta rost (kontrapozitsiya)?',
+                        ans: 'Ko‘cha quruq bo‘lsa, yomg‘ir yog‘magan',
+                        opts: [
+                            'Ko‘cha ho‘l bo‘lsa, yomg‘ir yog‘gan',
+                            'Ko‘cha quruq bo‘lsa, yomg‘ir yog‘magan',
+                            'Yomg‘ir yog‘masa, ko‘cha quruq bo‘ladi',
+                            'Ko‘cha har doim ho‘l'
+                        ],
+                        exp: 'Mantiqiy qonun (A → B) ≡ (¬B → ¬A): Ko‘cha ho‘l bo‘lmasa (quruq bo‘lsa), demak yomg‘ir yog‘magan.'
+                    },
+                    {
+                        q: 'Xonada 3 ta chiroq o‘chirgich (viklyuchatel) bor, lampochka esa yopiq eshik ortidagi boshqa xonada. Eshikni faqat 1 MARTA ochib, qaysi o‘chirgich lampochkaga tegishli ekanini qanday aniq bilish mumkin?',
+                        ans: '1-sini yoqib biroz kutish, o‘chirib 2-sini yoqish va issiqligini tekshirish',
+                        opts: [
+                            'Barchasini birga yoqish',
+                            '1-sini yoqib biroz kutish, o‘chirib 2-sini yoqish va issiqligini tekshirish',
+                            'Bitta eshik ochish bilan bilib bo‘lmaydi',
+                            'Faqat 3-sini yoqish'
+                        ],
+                        exp: 'Lampochka yoniq bo‘lsa — 2-si; o‘chiq lekin issiq bo‘lsa — 1-si; o‘chiq va sovuq bo‘lsa — 3-si!'
+                    },
+                    {
+                        q: 'Ko‘ldagi nilufar guli har kuni 2 baravar kattalashadi. Agar u ko‘lni 48 kunda to‘liq qoplasa, ko‘lning yarmini nechanchi kunda qoplagan?',
+                        ans: '47-kunda',
+                        opts: ['24-kunda', '47-kunda', '36-kunda', '46-kunda'],
+                        exp: 'Har kuni 2 baravar oshgani sababli, 48-kundan bir kun oldin — 47-kunda ko‘lning yarmini egallagan.'
+                    }
+                ];
+                return shuffleArray(bank).map(item => ({
+                    prompt: 'Mantiqiy tahlil:',
+                    visualHTML: `<div class="my-3 p-4 rounded-4 bg-dark border border-secondary text-start fs-6 lh-base" style="white-space: pre-line;">${item.q}</div>`,
+                    options: shuffleArray(item.opts),
+                    answer: item.ans,
+                    explanation: item.exp
+                }));
+            }
+        }
+    ];
+
+    // Yordamchi funksiya: massivni aralashtirish
+    function shuffleArray(arr) {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+    }
+
+    /**
+     * ============================================================================
+     * 3. GAME ENGINE (Timer, Score, Combo, Turli Mexanikalar, Natijalar)
+     * ============================================================================
+     */
+    const GameEngine = {
+        currentGame: null,
+        questions: [],
+        currentIndex: 0,
+        score: 0,
+        combo: 1,
+        maxCombo: 1,
+        correctCount: 0,
+        timerInterval: null,
+        timeLeft: 0,
+        totalTime: 25,
+        isLocked: false,
+        isDaily: false,
+
+        // O'yin qoidalari modalini ochish
+        openRulesModal(gameId, isDaily = false) {
+            SoundEngine.playClick();
+            const game = GAMES_DB.find(g => g.id === gameId);
+            if (!game) return;
+
+            this.currentGame = game;
+            this.isDaily = isDaily;
+
+            document.getElementById('modal-game-icon').textContent = game.icon;
+            document.getElementById('modal-game-title').textContent = game.title;
+            document.getElementById('modal-game-age').textContent = `${game.age} yosh toifasi`;
+            document.getElementById('modal-game-mechanic').textContent = game.mechanic;
+            document.getElementById('modal-game-time').innerHTML = `<i class="bi bi-clock me-1"></i>${game.timeLimit} soniya / bosqich`;
+            document.getElementById('modal-game-rules').textContent = game.rules;
+
+            const startBtn = document.getElementById('modal-start-btn');
+            startBtn.onclick = () => {
+                const modalEl = document.getElementById('rulesModal');
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if (modalInstance) modalInstance.hide();
+                this.startGame(game, isDaily);
+            };
+
+            const modal = new bootstrap.Modal(document.getElementById('rulesModal'));
+            modal.show();
+        },
+
+        // O'yinni boshlash
+        startGame(game, isDaily = false) {
+            SoundEngine.playStart();
+            this.currentGame = game;
+            this.isDaily = isDaily;
+            this.questions = game.generateQuestions();
+            this.currentIndex = 0;
+            this.score = 0;
+            this.combo = 1;
+            this.maxCombo = 1;
+            this.correctCount = 0;
+            this.totalTime = game.timeLimit;
+
+            // Ko'rinishlarni almashtirish
+            document.getElementById('main-portal-view').classList.add('d-none');
+            document.getElementById('game-arena-view').classList.remove('d-none');
+            document.getElementById('arena-timer-section').classList.remove('d-none');
+            document.getElementById('arena-game-title-label').textContent = `${game.icon} ${game.title}`;
+
+            const arenaBox = document.getElementById('arena-box');
+            if (game.age === '6-9') {
+                arenaBox.classList.add('kid-mode');
+            } else {
+                arenaBox.classList.remove('kid-mode');
+            }
+
+            this.updateHUD();
+            this.renderRound();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+
+        updateHUD() {
+            document.getElementById('hud-progress').textContent = `${Math.min(this.currentIndex + 1, this.questions.length)} / ${this.questions.length}`;
+            document.getElementById('hud-combo').textContent = `x${this.combo}`;
+            this.animateScore(this.score);
+        },
+
+        animateScore(targetScore) {
+            const el = document.getElementById('hud-score');
+            const current = parseInt(el.textContent) || 0;
+            if (current === targetScore) return;
+            const step = Math.ceil((targetScore - current) / 10);
+            let val = current;
+            const interval = setInterval(() => {
+                val += step;
+                if ((step > 0 && val >= targetScore) || (step < 0 && val <= targetScore)) {
+                    el.textContent = targetScore;
+                    clearInterval(interval);
+                } else {
+                    el.textContent = val;
+                }
+            }, 25);
+        },
+
+        // Timer ishga tushirish
+        startTimer() {
+            this.stopTimer();
+            this.timeLeft = this.totalTime;
+            this.updateTimerUI();
+
+            this.timerInterval = setInterval(() => {
+                this.timeLeft--;
+                this.updateTimerUI();
+
+                if (this.timeLeft <= 5 && this.timeLeft > 0) {
+                    SoundEngine.playTick(true);
+                } else if (this.timeLeft > 5) {
+                    SoundEngine.playTick(false);
+                }
+
+                if (this.timeLeft <= 0) {
+                    this.stopTimer();
+                    this.handleTimeUp();
+                }
+            }, 1000);
+        },
+
+        stopTimer() {
+            if (this.timerInterval) {
+                clearInterval(this.timerInterval);
+                this.timerInterval = null;
+            }
+        },
+
+        updateTimerUI() {
+            const pct = Math.max(0, (this.timeLeft / this.totalTime) * 100);
+            const bar = document.getElementById('hud-timer-bar');
+            const text = document.getElementById('hud-timer-text');
+
+            bar.style.width = `${pct}%`;
+            text.innerHTML = `<i class="bi bi-stopwatch me-1"></i>${this.timeLeft}s`;
+
+            bar.classList.remove('warning', 'danger');
+            text.classList.remove('text-info', 'text-warning', 'text-danger');
+
+            if (pct <= 25) {
+                bar.classList.add('danger');
+                text.classList.add('text-danger');
+            } else if (pct <= 50) {
+                bar.classList.add('warning');
+                text.classList.add('text-warning');
+            } else {
+                text.classList.add('text-info');
+            }
+        },
+
+        // Joriy bosqich/savolni chizish
+        renderRound() {
+            this.isLocked = false;
+            const feedback = document.getElementById('arena-feedback');
+            feedback.className = 'feedback-box';
+            feedback.innerHTML = '';
+
+            this.updateHUD();
+            const q = this.questions[this.currentIndex];
+            const stage = document.getElementById('arena-stage');
+            const mech = this.currentGame.mechanicType;
+
+            if (mech === 'choice') {
+                this.renderChoiceStage(stage, q);
+                this.startTimer();
+            } else if (mech === 'grid_odd') {
+                this.renderGridOddStage(stage, q);
+                this.startTimer();
+            } else if (mech === 'memory') {
+                this.renderMemoryStage(stage, q);
+                this.startTimer();
+            } else if (mech === 'drag_match') {
+                this.renderDragMatchStage(stage, q);
+                this.startTimer();
+            } else if (mech === 'schulte') {
+                this.renderSchulteStage(stage, q);
+                this.startTimer();
+            } else if (mech === 'nim') {
+                this.renderNimStage(stage, q);
+                this.startTimer();
+            } else if (mech === 'memory_matrix') {
+                this.renderMemoryMatrixStage(stage, q);
+            }
+        },
+
+        // MEXANIKA 1: Multiple Choice (IQ, Matematika, Shifr, Rang, Mantiq)
+        renderChoiceStage(stage, q) {
+            const optionsHTML = q.options.map((opt, idx) => `
+                <div class="col-md-6">
+                    <button class="option-btn" data-val="${escapeHtml(opt)}" onclick="GameEngine.submitChoice(this, '${escapeQuotes(opt)}')">
+                        <span><strong class="text-info me-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
+                        <i class="bi bi-chevron-right opacity-50"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            stage.innerHTML = `
+                <div class="question-stage text-center">
+                    <h4 class="mb-2">${q.prompt}</h4>
+                    ${q.visualHTML || ''}
+                    <div class="row g-3 mt-3 text-start">
+                        ${optionsHTML}
+                    </div>
+                </div>
+            `;
+        },
+
+        submitChoice(btnEl, selectedVal) {
+            if (this.isLocked) return;
+            this.isLocked = true;
+            this.stopTimer();
+
+            const q = this.questions[this.currentIndex];
+            const isCorrect = selectedVal === q.answer;
+            const allBtns = document.querySelectorAll('.option-btn');
+
+            allBtns.forEach(b => {
+                b.disabled = true;
+                if (b.getAttribute('data-val') === q.answer) {
+                    b.classList.add('correct-anim');
+                }
+            });
+
+            if (isCorrect) {
+                btnEl.classList.add('correct-anim');
+                this.handleRoundSuccess(q.explanation);
+            } else {
+                btnEl.classList.add('wrong-anim');
+                this.handleRoundFail(q.answer, q.explanation);
+            }
+        },
+
+        // MEXANIKA 2: Farqni Top (Grid Spotter)
+        renderGridOddStage(stage, q) {
+            const cells = q.items.map((item, idx) => `
+                <div class="spot-cell" onclick="GameEngine.submitGridOdd(this, ${idx})">${item}</div>
+            `).join('');
+
+            stage.innerHTML = `
+                <div class="question-stage text-center">
+                    <h4 class="mb-4">${q.prompt}</h4>
+                    <div class="spot-grid" style="grid-template-columns: repeat(${q.gridCols}, 1fr);">
+                        ${cells}
+                    </div>
+                </div>
+            `;
+        },
+
+        submitGridOdd(cellEl, idx) {
+            if (this.isLocked) return;
+            this.isLocked = true;
+            this.stopTimer();
+
+            const q = this.questions[this.currentIndex];
+            const allCells = document.querySelectorAll('.spot-cell');
+            allCells[q.answerIndex].classList.add('found');
+
+            if (idx === q.answerIndex) {
+                this.handleRoundSuccess(q.explanation);
+            } else {
+                cellEl.style.borderColor = '#ef4444';
+                cellEl.style.background = 'rgba(239, 68, 68, 0.3)';
+                this.handleRoundFail(q.answer, q.explanation);
+            }
+        },
+
+        // MEXANIKA 3: Xotira Kartochkalari (Memory Cards)
+        renderMemoryStage(stage, q) {
+            let flippedCards = [];
+            let matchedPairs = 0;
+            const totalPairs = q.cards.length / 2;
+
+            const cardsHTML = q.cards.map((emoji, idx) => `
+                <div class="mem-card" data-idx="${idx}" data-emoji="${emoji}">
+                    <span class="card-face d-none">${emoji}</span>
+                    <span class="card-back text-info fs-3"><i class="fa-solid fa-question"></i></span>
+                </div>
+            `).join('');
+
+            stage.innerHTML = `
+                <div class="question-stage text-center">
+                    <h4 class="mb-4">${q.prompt}</h4>
+                    <div class="memory-grid" style="grid-template-columns: repeat(${q.cards.length <= 6 ? 3 : 4}, 1fr);">
+                        ${cardsHTML}
+                    </div>
+                </div>
+            `;
+
+            const cardEls = stage.querySelectorAll('.mem-card');
+            cardEls.forEach(card => {
+                card.addEventListener('click', () => {
+                    if (this.isLocked || card.classList.contains('flipped') || card.classList.contains('matched') || flippedCards.length >= 2) return;
+                    
+                    SoundEngine.playClick();
+                    card.classList.add('flipped');
+                    card.querySelector('.card-face').classList.remove('d-none');
+                    card.querySelector('.card-back').classList.add('d-none');
+                    flippedCards.push(card);
+
+                    if (flippedCards.length === 2) {
+                        const [c1, c2] = flippedCards;
+                        if (c1.dataset.emoji === c2.dataset.emoji) {
+                            SoundEngine.playBonus();
+                            c1.classList.add('matched');
+                            c2.classList.add('matched');
+                            flippedCards = [];
+                            matchedPairs++;
+
+                            if (matchedPairs === totalPairs) {
+                                this.isLocked = true;
+                                this.stopTimer();
+                                this.handleRoundSuccess(q.explanation);
+                            }
+                        } else {
+                            setTimeout(() => {
+                                [c1, c2].forEach(c => {
+                                    c.classList.remove('flipped');
+                                    c.querySelector('.card-face').classList.add('d-none');
+                                    c.querySelector('.card-back').classList.remove('d-none');
+                                });
+                                flippedCards = [];
+                            }, 650);
+                        }
+                    }
+                });
+            });
+        },
+
+        // MEXANIKA 4: Shakllar Mosligi (Drag & Drop + Tap Support)
+        renderDragMatchStage(stage, q) {
+            const shuffledItems = shuffleArray(q.pairs);
+            const shuffledTargets = shuffleArray(q.pairs);
+            let matchedCount = 0;
+            let selectedItemVal = null;
+
+            const itemsHTML = shuffledItems.map(p => `
+                <div class="drag-item" draggable="true" data-item="${p.item}">${p.item}</div>
+            `).join('');
+
+            const zonesHTML = shuffledTargets.map(p => `
+                <div class="col-4">
+                    <div class="drop-zone" data-expect="${p.item}">
+                        <span class="fw-bold text-info small mb-1">${p.targetLabel}</span>
+                        <span class="zone-slot text-secondary small">Shu yerga qo‘ying</span>
+                    </div>
+                </div>
+            `).join('');
+
+            stage.innerHTML = `
+                <div class="question-stage text-center">
+                    <h4 class="mb-3">${q.prompt}</h4>
+                    <p class="text-secondary small mb-4">Elementni sudrab mos katakchaga tashlang (yoki avval elementni, so‘ng katakchani bosing)</p>
+                    <div class="d-flex justify-content-center gap-3 mb-4" id="drag-source-pool">
+                        ${itemsHTML}
+                    </div>
+                    <div class="row g-3">
+                        ${zonesHTML}
+                    </div>
+                </div>
+            `;
+
+            const draggables = stage.querySelectorAll('.drag-item');
+            const zones = stage.querySelectorAll('.drop-zone');
+
+            const tryMatch = (itemVal, zoneEl) => {
+                if (this.isLocked || zoneEl.classList.contains('matched-zone')) return;
+                if (zoneEl.dataset.expect === itemVal) {
+                    SoundEngine.playBonus();
+                    zoneEl.classList.add('matched-zone');
+                    zoneEl.querySelector('.zone-slot').innerHTML = `<span class="fs-2">${itemVal}</span>`;
+                    const srcEl = stage.querySelector(`.drag-item[data-item="${itemVal}"]`);
+                    if (srcEl) srcEl.style.visibility = 'hidden';
+                    selectedItemVal = null;
+                    matchedCount++;
+
+                    if (matchedCount === q.pairs.length) {
+                        this.isLocked = true;
+                        this.stopTimer();
+                        this.handleRoundSuccess(q.explanation);
+                    }
+                } else {
+                    SoundEngine.playWrong();
+                    zoneEl.style.borderColor = '#ef4444';
+                    setTimeout(() => { zoneEl.style.borderColor = ''; }, 400);
+                }
+            };
+
+            draggables.forEach(el => {
+                el.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', el.dataset.item);
+                });
+                el.addEventListener('click', () => {
+                    SoundEngine.playClick();
+                    draggables.forEach(d => d.classList.remove('selected-tap'));
+                    el.classList.add('selected-tap');
+                    selectedItemVal = el.dataset.item;
+                });
+            });
+
+            zones.forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('drag-over');
+                });
+                zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    zone.classList.remove('drag-over');
+                    const data = e.dataTransfer.getData('text/plain');
+                    tryMatch(data, zone);
+                });
+                zone.addEventListener('click', () => {
+                    if (selectedItemVal) tryMatch(selectedItemVal, zone);
+                });
+            });
+        },
+
+        // MEXANIKA 5: Schulte Diqqat Jadvali
+        renderSchulteStage(stage, q) {
+            let expected = 1;
+            const cellsHTML = q.numbers.map(num => `
+                <div class="spot-cell" data-num="${num}">${num}</div>
+            `).join('');
+
+            stage.innerHTML = `
+                <div class="question-stage text-center">
+                    <h4 class="mb-2">${q.prompt}</h4>
+                    <div class="mb-3"><span class="badge bg-info text-dark fs-6 px-3 py-2">Navbatdagi raqam: <strong id="schulte-next">1</strong></span></div>
+                    <div class="spot-grid" style="grid-template-columns: repeat(${q.cols}, 1fr);">
+                        ${cellsHTML}
+                    </div>
+                </div>
+            `;
+
+            stage.querySelectorAll('.spot-cell').forEach(cell => {
+                cell.addEventListener('click', () => {
+                    if (this.isLocked) return;
+                    const val = parseInt(cell.dataset.num);
+                    if (val === expected) {
+                        SoundEngine.playClick();
+                        cell.classList.add('found');
+                        expected++;
+                        if (expected > q.maxNum) {
+                            this.isLocked = true;
+                            this.stopTimer();
+                            this.handleRoundSuccess(q.explanation);
+                        } else {
+                            document.getElementById('schulte-next').textContent = expected;
+                        }
+                    } else {
+                        SoundEngine.playWrong();
+                        cell.style.borderColor = '#ef4444';
+                        setTimeout(() => { if (!cell.classList.contains('found')) cell.style.borderColor = ''; }, 300);
+                    }
+                });
+            });
+        },
+
+        // MEXANIKA 6: Strategik Nim O'yini
+        renderNimStage(stage, q) {
+            let stones = q.initialStones;
+
+            const updateBoard = (statusMsg = 'Sizning navbatingiz! 1, 2 yoki 3 ta tosh oling:') => {
+                const stonesVisual = Array(stones).fill('<span class="fs-2 mx-1">💎</span>').join('');
+                stage.innerHTML = `
+                    <div class="question-stage text-center">
+                        <h4 class="mb-2">${q.prompt}</h4>
+                        <p class="text-info fw-bold mb-3" id="nim-status">${statusMsg}</p>
+                        <div class="p-4 rounded-4 bg-dark border border-primary mb-4 d-flex flex-wrap justify-content-center align-items-center" style="min-height: 110px;">
+                            ${stonesVisual || '<span class="text-secondary">Toshlar tugadi</span>'}
+                        </div>
+                        <div class="badge bg-secondary mb-3 fs-6">Qolgan toshlar: ${stones} ta</div>
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-primary btn-lg px-4 rounded-4 fw-bold nim-take-btn" data-take="1" ${stones < 1 ? 'disabled' : ''}>1 ta olish</button>
+                            <button class="btn btn-primary btn-lg px-4 rounded-4 fw-bold nim-take-btn" data-take="2" ${stones < 2 ? 'disabled' : ''}>2 ta olish</button>
+                            <button class="btn btn-primary btn-lg px-4 rounded-4 fw-bold nim-take-btn" data-take="3" ${stones < 3 ? 'disabled' : ''}>3 ta olish</button>
+                        </div>
+                    </div>
+                `;
+
+                stage.querySelectorAll('.nim-take-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        if (this.isLocked) return;
+                        const take = parseInt(btn.dataset.take);
+                        SoundEngine.playClick();
+                        stones -= take;
+
+                        if (stones <= 0) {
+                            this.isLocked = true;
+                            this.stopTimer();
+                            updateBoard('Tabriklaymiz! Oxirgi toshni siz oldingiz!');
+                            this.handleRoundSuccess(q.explanation);
+                            return;
+                        }
+
+                        // Kompyuter yurishi (optimal 4 ga karrali strategiya)
+                        this.isLocked = true;
+                        updateBoard(`Siz ${take} ta oldingiz. Kompyuter o‘ylamoqda...`);
+                        setTimeout(() => {
+                            let aiTake = stones % 4;
+                            if (aiTake === 0) aiTake = Math.min(stones, Math.floor(Math.random() * 3) + 1);
+                            stones -= aiTake;
+
+                            if (stones <= 0) {
+                                this.stopTimer();
+                                updateBoard(`Kompyuter ${aiTake} ta tosh olib g‘alaba qozondi!`);
+                                this.handleRoundFail('Oxirgi toshni olish', q.explanation);
+                            } else {
+                                this.isLocked = false;
+                                updateBoard(`Kompyuter ${aiTake} ta oldi. Endi sizning navbatingiz!`);
+                            }
+                        }, 650);
+                    });
+                });
+            };
+
+            updateBoard();
+        },
+
+        // MEXANIKA 7: Maksimal Xotira Matritsasi
+        renderMemoryMatrixStage(stage, q) {
+            this.isLocked = true;
+            this.stopTimer();
+            let foundTargets = new Set();
+
+            const renderGrid = (revealMode) => {
+                const cells = Array.from({ length: q.gridSize }, (_, idx) => {
+                    const isTarget = q.targets.includes(idx);
+                    const isFound = foundTargets.has(idx);
+                    let cls = 'spot-cell';
+                    if (revealMode && isTarget) cls += ' found';
+                    if (!revealMode && isFound) cls += ' found';
+                    return `<div class="${cls}" data-idx="${idx}"></div>`;
+                }).join('');
+
+                stage.innerHTML = `
+                    <div class="question-stage text-center">
+                        <h4 class="mb-2">${q.prompt}</h4>
+                        <p class="text-warning fw-bold mb-3">${revealMode ? '👀 Kataklar o‘rnini eslab qoling!' : `🎯 Endi ${q.targets.length} ta katakni belgilang (${foundTargets.size}/${q.targets.length})`}</p>
+                        <div class="spot-grid" style="grid-template-columns: repeat(${q.cols}, 1fr); max-width: 360px;">
+                            ${cells}
+                        </div>
+                    </div>
+                `;
+            };
+
+            renderGrid(true);
+
+            setTimeout(() => {
+                if (document.getElementById('game-arena-view').classList.contains('d-none')) return;
+                renderGrid(false);
+                this.isLocked = false;
+                this.startTimer();
+
+                stage.querySelectorAll('.spot-cell').forEach(cell => {
+                    cell.addEventListener('click', () => {
+                        if (this.isLocked) return;
+                        const idx = parseInt(cell.dataset.idx);
+                        if (foundTargets.has(idx)) return;
+
+                        if (q.targets.includes(idx)) {
+                            SoundEngine.playClick();
+                            foundTargets.add(idx);
+                            cell.classList.add('found');
+                            if (foundTargets.size === q.targets.length) {
+                                this.isLocked = true;
+                                this.stopTimer();
+                                this.handleRoundSuccess(q.explanation);
+                            }
+                        } else {
+                            this.isLocked = true;
+                            this.stopTimer();
+                            cell.style.background = 'rgba(239, 68, 68, 0.4)';
+                            cell.style.borderColor = '#ef4444';
+                            // To'g'ri kataklarni ko'rsatish
+                            q.targets.forEach(tIdx => {
+                                stage.querySelector(`.spot-cell[data-idx="${tIdx}"]`).classList.add('found');
+                            });
+                            this.handleRoundFail(q.answer, q.explanation);
+                        }
+                    });
+                });
+            }, 2200);
+        },
+
+        // To'g'ri javob berilganda
+        handleRoundSuccess(explanation) {
+            SoundEngine.playCorrect();
+            this.correctCount++;
+
+            // Ball hisoblash: Asosiy 100 + Tezlik bonusi + Combo
+            const speedBonus = Math.round((this.timeLeft / this.totalTime) * 50);
+            const earned = (100 + speedBonus) * this.combo;
+            this.score += earned;
+
+            if (this.combo > 1) {
+                setTimeout(() => SoundEngine.playBonus(), 180);
+            }
+            this.combo++;
+            if (this.combo > this.maxCombo) this.maxCombo = this.combo;
+
+            this.updateHUD();
+
+            const feedback = document.getElementById('arena-feedback');
+            feedback.className = 'feedback-box success';
+            feedback.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+                        <strong>Ajoyib! To‘g‘ri javob (+${earned} ball)</strong>
+                        <div class="small fw-normal mt-1 text-white opacity-90">${explanation}</div>
+                    </div>
+                </div>
+            `;
+
+            this.scheduleNextRound();
+        },
+
+        // Noto'g'ri javob berilganda
+        handleRoundFail(correctAnswer, explanation) {
+            SoundEngine.playWrong();
+            this.combo = 1;
+            this.updateHUD();
+
+            const feedback = document.getElementById('arena-feedback');
+            feedback.className = 'feedback-box error';
+            feedback.innerHTML = `
+                <div>
+                    <i class="bi bi-x-circle-fill me-2 fs-5"></i>
+                    <strong>Noto‘g‘ri! To‘g‘ri javob: <span class="text-white underline">${correctAnswer}</span></strong>
+                    <div class="small fw-normal mt-1 text-white opacity-90">${explanation}</div>
+                </div>
+            `;
+
+            this.scheduleNextRound();
+        },
+
+        // Vaqt tugaganda avtomatik keyingi savolga o'tish
+        handleTimeUp() {
+            this.isLocked = true;
+            SoundEngine.playTimeUp();
+            this.combo = 1;
+            this.updateHUD();
+
+            const q = this.questions[this.currentIndex];
+            const feedback = document.getElementById('arena-feedback');
+            feedback.className = 'feedback-box error';
+            feedback.innerHTML = `
+                <div>
+                    <i class="bi bi-alarm-fill me-2 fs-5"></i>
+                    <strong>Vaqt tugadi! To‘g‘ri javob: <span class="text-white">${q.answer}</span></strong>
+                    <div class="small fw-normal mt-1 text-white opacity-90">${q.explanation}</div>
+                </div>
+            `;
+
+            this.scheduleNextRound();
+        },
+
+        scheduleNextRound() {
+            setTimeout(() => {
+                this.currentIndex++;
+                if (this.currentIndex < this.questions.length) {
+                    this.renderRound();
+                } else {
+                    this.finishGame();
+                }
+            }, 2200);
+        },
+
+        // O'yin yakuni va natijalar sahifasi
+        finishGame() {
+            this.stopTimer();
+            document.getElementById('arena-timer-section').classList.add('d-none');
+            document.getElementById('arena-feedback').className = 'feedback-box';
+
+            const totalRounds = this.questions.length;
+            const accuracy = Math.round((this.correctCount / totalRounds) * 100);
+            let finalScore = this.score;
+            let dailyBonusText = '';
+
+            if (this.isDaily && accuracy >= 50) {
+                finalScore += 250;
+                dailyBonusText = '<div class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3"><i class="fa-solid fa-fire me-1"></i> Kunlik Challenge Bonusi: +250 XP!</div>';
+            }
+
+            // Rag'batlantiruvchi xabar va ovoz
+            let titleMsg = '';
+            let subMsg = '';
+            let medalEmoji = '🥉';
+
+            if (accuracy >= 80) {
+                SoundEngine.playVictory();
+                ConfettiEffect.launch();
+                titleMsg = 'Dahshatli Natija! Siz Haqiqiy Zukkosiz!';
+                subMsg = 'Aql bovar qilmas tezlik va aniqlik! Miyangiz eng yuqori tezlikda ishlamoqda.';
+                medalEmoji = '🏆';
+            } else if (accuracy >= 50) {
+                SoundEngine.playVictory();
+                titleMsg = 'Yaxshi Natija! Barakalla!';
+                subMsg = 'Sizda kuchli salohiyat bor. Yana bir bor urinib ko‘rsangiz, rekord o‘rnatishingiz aniq!';
+                medalEmoji = '🥈';
+            } else {
+                SoundEngine.playStart();
+                titleMsg = 'Yaxshi Mashg‘ulot Bo‘ldi!';
+                subMsg = 'Har bir urinish miya neyronlarini mustahkamlaydi. Qayta o‘ynab natijangizni yaxshilang!';
+                medalEmoji = '🎯';
+            }
+
+            // Saqlash va yutuqlarni tekshirish
+            const unlockedBadges = App.recordGameResult(this.currentGame, finalScore, accuracy, this.maxCombo, this.isDaily);
+
+            const badgesHTML = unlockedBadges.length > 0
+                ? `<div class="my-3"><div class="small text-secondary mb-1">Qo‘lga kiritilgan yutuqlar:</div>${unlockedBadges.map(b => `<span class="achievement-badge"><i class="fa-solid fa-award"></i> ${b}</span>`).join('')}</div>`
+                : '';
+
+            document.getElementById('arena-stage').innerHTML = `
+                <div class="question-stage text-center py-3">
+                    <div style="font-size: 4.5rem;" class="mb-2">${medalEmoji}</div>
+                    ${dailyBonusText}
+                    <h2 class="mb-2">${titleMsg}</h2>
+                    <p class="text-secondary mb-4 mx-auto" style="max-width: 520px;">${subMsg}</p>
+
+                    <div class="row g-3 justify-content-center mb-4" style="max-width: 600px; margin: 0 auto;">
+                        <div class="col-4">
+                            <div class="p-3 rounded-4 bg-dark border border-warning">
+                                <div class="fs-3 fw-black text-warning">${finalScore}</div>
+                                <small class="text-secondary">Umumiy Ball</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-3 rounded-4 bg-dark border border-success">
+                                <div class="fs-3 fw-black text-success">${accuracy}%</div>
+                                <small class="text-secondary">Aniqlik (${this.correctCount}/${totalRounds})</small>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-3 rounded-4 bg-dark border border-info">
+                                <div class="fs-3 fw-black text-info">x${this.maxCombo}</div>
+                                <small class="text-secondary">Maks Combo</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${badgesHTML}
+
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                        <button class="btn btn-glow px-4 py-3" onclick="GameEngine.startGame(GameEngine.currentGame, GameEngine.isDaily)">
+                            <i class="fa-solid fa-rotate-right me-2"></i> Qayta O‘ynash
+                        </button>
+                        <button class="btn btn-outline-light px-4 py-3 rounded-4 fw-bold" onclick="GameEngine.exitToMenu()">
+                            <i class="bi bi-house-door me-2"></i> Bosh Sahifaga Qaytish
+                        </button>
+                    </div>
+                </div>
+            `;
+        },
+
+        exitToMenu() {
+            this.stopTimer();
+            SoundEngine.playClick();
+            document.getElementById('game-arena-view').classList.add('d-none');
+            document.getElementById('main-portal-view').classList.remove('d-none');
+            App.renderLeaderboard();
+        }
+    };
+
+    /**
+     * ============================================================================
+     * 4. CONFETTI ANIMATION ENGINE
+     * ============================================================================
+     */
+    const ConfettiEffect = {
+        launch() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const colors = ['#f43f5e', '#3b82f6', '#10b981', '#facc15', '#a855f7', '#fb923c'];
+            const pieces = Array.from({ length: 110 }, () => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vx: Math.random() * 4 - 2,
+                vy: Math.random() * 4 + 3,
+                angle: Math.random() * 360
+            }));
+
+            let frame = 0;
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.angle += 5;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.angle * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.4);
+                    ctx.restore();
+                });
+                frame++;
+                if (frame < 160) {
+                    requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            animate();
+        }
+    };
+
+    /**
+     * ============================================================================
+     * 5. PORTAL APP CONTROLLER (LocalStorage, Reyting, Filtrlash, Kunlik Challenge)
+     * ============================================================================
+     */
+    const App = {
+        state: {
+            playerName: 'Zukko O‘yinchi',
+            totalXP: 0,
+            gamesPlayed: 0,
+            achievements: [],
+            dailyCompletedDate: null
+        },
+        dailyGameId: 't1_sequence',
+
+        init() {
+            this.loadState();
+            this.pickDailyGame();
+            this.renderGames('all');
+            this.updateProfileUI();
+            this.renderLeaderboard();
+        },
+
+        loadState() {
+            try {
+                const saved = localStorage.getItem('zukkoArenaState_v1');
+                if (saved) {
+                    this.state = { ...this.state, ...JSON.parse(saved) };
+                }
+            } catch (e) {
+                console.warn('LocalStorage yuklashda xatolik:', e);
+            }
+            document.getElementById('player-name-input').value = this.state.playerName;
+        },
+
+        saveState() {
+            try {
+                localStorage.setItem('zukkoArenaState_v1', JSON.stringify(this.state));
+            } catch (e) {
+                console.warn('LocalStorage saqlashda xatolik:', e);
+            }
+        },
+
+        getRank(xp) {
+            if (xp >= 6000) return 'Master';
+            if (xp >= 3000) return 'Expert';
+            if (xp >= 1000) return 'Advanced';
+            return 'Beginner';
+        },
+
+        updateProfileUI() {
+            const rank = this.getRank(this.state.totalXP);
+            document.getElementById('nav-total-xp').textContent = this.state.totalXP.toLocaleString();
+            const badge = document.getElementById('nav-rank-badge');
+            badge.textContent = rank;
+            badge.className = `rank-badge rank-${rank}`;
+
+            document.getElementById('stat-games-played').textContent = this.state.gamesPlayed;
+            document.getElementById('stat-player-level').textContent = rank;
+
+            const achContainer = document.getElementById('achievements-list');
+            if (this.state.achievements.length > 0) {
+                achContainer.innerHTML = this.state.achievements
+                    .map(a => `<span class="achievement-badge"><i class="fa-solid fa-award"></i> ${a}</span>`)
+                    .join('');
+            }
+        },
+
+        savePlayerName() {
+            const val = document.getElementById('player-name-input').value.trim();
+            if (val) {
+                SoundEngine.playBonus();
+                this.state.playerName = val;
+                this.saveState();
+                this.renderLeaderboard();
+            }
+        },
+
+        pickDailyGame() {
+            const dayIndex = new Date().getDate() % GAMES_DB.length;
+            const dailyGame = GAMES_DB[dayIndex];
+            this.dailyGameId = dailyGame.id;
+            document.getElementById('daily-game-title').textContent = `${dailyGame.icon} ${dailyGame.title} (${dailyGame.age} yosh)`;
+            document.getElementById('daily-game-desc').textContent = dailyGame.desc;
+        },
+
+        startDailyChallenge() {
+            GameEngine.openRulesModal(this.dailyGameId, true);
+        },
+
+        recordGameResult(game, score, accuracy, maxCombo, isDaily) {
+            this.state.totalXP += score;
+            this.state.gamesPlayed += 1;
+
+            const newBadges = [];
+            const checkUnlock = (title) => {
+                if (!this.state.achievements.includes(title)) {
+                    this.state.achievements.push(title);
+                    newBadges.push(title);
+                }
+            };
+
+            if (this.state.gamesPlayed >= 1) checkUnlock('Birinchi Qadam');
+            if (accuracy === 100) checkUnlock('100% Mukammal!');
+            if (maxCombo >= 4) checkUnlock('Combo Ustasi (x4+)');
+            if (score >= 800) checkUnlock('Super Intellekt');
+            if (this.state.gamesPlayed >= 5) checkUnlock('Faol Tadqiqotchi');
+            if (isDaily && accuracy >= 50) checkUnlock('Kunlik G‘olib');
+
+            this.saveState();
+            this.updateProfileUI();
+            this.renderLeaderboard();
+            return newBadges;
+        },
+
+        renderGames(filterAge) {
+            const container = document.getElementById('games-grid-container');
+            const filtered = filterAge === 'all' ? GAMES_DB : GAMES_DB.filter(g => g.age === filterAge);
+
+            const ageColors = {
+                '6-9': 'bg-danger',
+                '9-14': 'bg-info text-dark',
+                '14-19': 'bg-primary',
+                '19+': 'bg-warning text-dark'
+            };
+
+            container.innerHTML = filtered.map(game => `
+                <div class="col-md-6 col-lg-4">
+                    <div class="game-card">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div class="game-icon-box" style="background: ${game.iconBg};">${game.icon}</div>
+                                <span class="badge ${ageColors[game.age]} rounded-pill px-3 py-1 fw-bold">${game.age} yosh</span>
+                            </div>
+                            <h3 class="h5 mb-2">${game.title}</h3>
+                            <p class="text-secondary small mb-3">${game.desc}</p>
+                        </div>
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="mechanic-tag"><i class="bi bi-cpu me-1"></i>${game.mechanic}</span>
+                                <span class="small text-secondary"><i class="bi bi-stopwatch me-1"></i>${game.timeLimit}s</span>
+                            </div>
+                            <button class="btn btn-primary w-100 rounded-4 py-2 fw-bold" onclick="GameEngine.openRulesModal('${game.id}')">
+                                <i class="fa-solid fa-play me-1"></i> O‘ynash
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        },
+
+        filterGames(age, btnEl) {
+            SoundEngine.playClick();
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+            this.renderGames(age);
+        },
+
+        selectAgeCategory(age) {
+            SoundEngine.playClick();
+            const targetBtn = document.querySelector(`.filter-btn[data-filter="${age}"]`);
+            this.filterGames(age, targetBtn);
+            document.getElementById('section-games').scrollIntoView({ behavior: 'smooth' });
+        },
+
+        scrollToCategories() {
+            SoundEngine.playClick();
+            document.getElementById('section-categories').scrollIntoView({ behavior: 'smooth' });
+        },
+
+        navigate(section) {
+            SoundEngine.playClick();
+            if (!document.getElementById('game-arena-view').classList.contains('d-none')) {
+                GameEngine.exitToMenu();
+            }
+
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const activeLink = document.getElementById(`nav-${section}`);
+            if (activeLink) activeLink.classList.add('active');
+
+            const map = {
+                home: 'section-hero',
+                games: 'section-games',
+                leaderboard: 'section-leaderboard',
+                about: 'section-about'
+            };
+            const target = document.getElementById(map[section]);
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+        },
+
+        renderLeaderboard() {
+            const bots = [
+                { name: 'Amirxon T.', xp: 6450, isUser: false },
+                { name: 'Madina K.', xp: 4820, isUser: false },
+                { name: 'Jasurbek R.', xp: 3590, isUser: false },
+                { name: 'Nilufar S.', xp: 2410, isUser: false },
+                { name: 'Sardorbek M.', xp: 1650, isUser: false },
+                { name: 'Zarina A.', xp: 980, isUser: false },
+                { name: 'Diyorbek O.', xp: 540, isUser: false }
+            ];
+
+            const allPlayers = [
+                ...bots,
+                { name: `${this.state.playerName} (Siz)`, xp: this.state.totalXP, isUser: true }
+            ].sort((a, b) => b.xp - a.xp).slice(0, 8);
+
+            const medals = ['🥇', '🥈', '🥉'];
+            const listEl = document.getElementById('leaderboard-list');
+
+            listEl.innerHTML = allPlayers.map((p, idx) => {
+                const rank = this.getRank(p.xp);
+                const posDisplay = idx < 3 ? `<span class="fs-4">${medals[idx]}</span>` : `<span class="fw-bold text-secondary px-2">#${idx + 1}</span>`;
+                return `
+                    <div class="leaderboard-row ${p.isUser ? 'current-user' : ''}">
+                        <div class="d-flex align-items-center gap-3">
+                            <div style="width: 34px; text-align: center;">${posDisplay}</div>
+                            <div>
+                                <div class="fw-bold ${p.isUser ? 'text-info' : 'text-white'}">${escapeHtml(p.name)}</div>
+                                <span class="rank-badge rank-${rank}">${rank}</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="fw-black text-warning fs-5">${p.xp.toLocaleString()} XP</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    };
+
+    function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+    }
+
+    function escapeQuotes(str) {
+        return String(str).replace(/'/g, "\\'");
+    }
+
+    // Sahifa yuklanganda ishga tushirish
+    window.addEventListener('DOMContentLoaded', () => {
+        App.init();
+    });
+    </script>
+</body>
+</html>
